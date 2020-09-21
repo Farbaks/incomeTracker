@@ -1,0 +1,106 @@
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div>
+      <p class="profile-heading">Dashboard</p>
+    </div>
+    <ion-buttons slot="end">
+      <div class="profile-img">
+        <img src="../../../assets/food/shawarma1.jpg" />
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
+  <div class="container price-container">
+    <p class="price-label">Total Income</p>
+    <p class="price-amount">₦<span>5,450,900.00</span></p>
+  </div>
+  <div class="container">
+    <canvas class="chart" #myChart height="250"></canvas>
+  </div>
+  <div class="container price-container2">
+    <p class="price-label">Income this month</p>
+    <p class="price-amount2">₦<span>350,900.00</span></p>
+  </div>
+  <div class="container">
+    <div class="chart  price-container2">
+      <p class="price-label">Total Jobs</p>
+      <p class="container-heading">400</p>
+      <canvas class="" #myChart2 height="250"></canvas>
+    </div>
+  </div>
+  <div class="">
+    <div class="container-link">
+      <p class="container-heading2">Recent Jobs</p>
+      <p class="see-more" [routerLink]="['categories']">See All</p>
+    </div>
+    <div class="recent-job-list">
+      <div class="job-item">
+        <div class="job-con">
+          <p class="heading1">7up Bottling Company</p>
+          <p class="status bggreen">Completed</p>
+        </div>
+        <div class="job-con2">
+          <div class="job-con3">
+            <p class="heading1">₦<span>350,900.00</span></p>
+            <p class="date">22/04/2020</p>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+      <div class="job-item">
+        <div class="job-con">
+          <p class="heading1">Serve Consulting</p>
+          <p class="status bgorange">Quotation pending</p>
+        </div>
+        <div class="job-con2">
+          <div class="job-con3">
+            <p class="heading1">₦<span>1,900,000.00</span></p>
+            <p class="date">16/08/2020</p>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+      <div class="job-item">
+        <div class="job-con">
+          <p class="heading1">Greenpeg</p>
+          <p class="status bggreen">Quotation Accepted</p>
+        </div>
+        <div class="job-con2">
+          <div class="job-con3">
+            <p class="heading1">₦<span>350,900.00</span></p>
+            <p class="date">22/04/2020</p>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+      <div class="job-item">
+        <div class="job-con">
+          <p class="heading1">Serve Consulting</p>
+          <p class="status bgorange">Quotation pending</p>
+        </div>
+        <div class="job-con2">
+          <div class="job-con3">
+            <p class="heading1">₦<span>1,900,000.00</span></p>
+            <p class="date">16/08/2020</p>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+      <div class="job-item">
+        <div class="job-con">
+          <p class="heading1">Greenpeg</p>
+          <p class="status bggreen">Quotation Accepted</p>
+        </div>
+        <div class="job-con2">
+          <div class="job-con3">
+            <p class="heading1">₦<span>350,900.00</span></p>
+            <p class="date">22/04/2020</p>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

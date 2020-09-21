@@ -1,0 +1,12 @@
+ion-icon {
+    font-size: 20px;
+    --ionicon-stroke-width: 26px;
+}
+label {
+    font-size: .85em;
+}
+ion-tab-button {
+    --color: var(--ion-color-bgcolor);
+    --color-selected: var(--ion-color-primarycolor);
+    border-top: solid 1px rgb(235,235,235) !important;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "incomeTracker",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
