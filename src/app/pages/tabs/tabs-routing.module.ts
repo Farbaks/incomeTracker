@@ -27,6 +27,17 @@ const routes: Routes = [
           {
             path: ':id',
             loadChildren: () => import('src/app/pages/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
+            children: [
+              {
+                path: '',
+                loadChildren: () => import('src/app/pages/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
+              },
+              {
+                path: 'quote',
+                loadChildren: () => import('src/app/pages/input-quotation/input-quotation.module').then(m => m.InputQuotationPageModule),
+                
+              }
+            ]
           }
         ]
       },

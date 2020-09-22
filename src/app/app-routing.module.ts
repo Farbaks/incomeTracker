@@ -30,7 +30,15 @@ const routes: Routes = [
   {
     path: 'job-detail',
     loadChildren: () => import('./pages/job-detail/job-detail.module').then( m => m.JobDetailPageModule)
+  },  {
+    path: 'new-job',
+    loadChildren: () => import('./pages/new-job/new-job.module').then( m => m.NewJobPageModule)
   },
+  {
+    path: 'input-quotation',
+    loadChildren: () => import('./pages/input-quotation/input-quotation.module').then( m => m.InputQuotationPageModule)
+  },
+
 ];
 
 @NgModule({
