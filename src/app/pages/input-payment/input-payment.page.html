@@ -1,0 +1,21 @@
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div class="buttons">
+      <button class="cancel" (click)="this.closeModal()">Cancel</button>
+      <button class="create">Add {{this.type}}</button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="input-div fullwidth">
+      <p>{{this.type}} Name:</p>
+      <input type="text" />
+    </div>
+    <div class="input-div fullwidth">
+      <p>Amount:</p>
+      <input type="number" />
+    </div>
+  </div>
+</ion-content>

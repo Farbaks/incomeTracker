@@ -1,0 +1,34 @@
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div class="top-section">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/account" icon="arrow-back" text=""></ion-back-button>
+      </ion-buttons>
+      <div>
+        <p class="profile-heading">Setting & Privacy</p>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
+  <div class="container">
+    <div class="section">
+      <div class="input-div">
+        <p>Old Password:</p>
+        <input type="text" />
+      </div>
+      <div class="input-div">
+        <p>New Password:</p>
+        <input type="email" />
+      </div>
+      <div class="input-div">
+        <p>Re enter Password:</p>
+        <input type="text" />
+      </div>
+    </div>
+    <div class="add-buttons">
+      <p class="add-quotation">Save</p>
+    </div>
+  </div>
+</ion-content>

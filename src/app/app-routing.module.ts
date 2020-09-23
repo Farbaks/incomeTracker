@@ -38,6 +38,34 @@ const routes: Routes = [
     path: 'input-quotation',
     loadChildren: () => import('./pages/input-quotation/input-quotation.module').then( m => m.InputQuotationPageModule)
   },
+  {
+    path: 'input-item',
+    loadChildren: () => import('./pages/input-item/input-item.module').then( m => m.InputItemPageModule)
+  },
+  {
+    path: 'input-payment',
+    loadChildren: () => import('./pages/input-payment/input-payment.module').then( m => m.InputPaymentPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'privacy',
+    loadChildren: () => import('./pages/privacy/privacy.module').then( m => m.PrivacyPageModule)
+  },
+  {
+    path: 'signin',
+    loadChildren: () => import('./pages/signin/signin.module').then( m => m.SigninPageModule)
+  },
+  {
+    path: 'sigup',
+    loadChildren: () => import('./pages/sigup/sigup.module').then( m => m.SigupPageModule)
+  },
+  {
+    path: 'forgotpassword',
+    loadChildren: () => import('./pages/forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+  },
 
 ];
 

@@ -12,24 +12,134 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
   <div class="container">
     <div class="section">
-      <ion-item>
-        <ion-label position="floating">Sales Person</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Quotation Validity</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Payment Terms</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
+      <div class="input-div">
+        <p>Sales Person:</p>
+        <input type="text" />
+      </div>
+      <div class="input-div">
+        <p>Quotation Validity(No of days):</p>
+        <input type="number" />
+      </div>
+      <div class="input-div">
+        <p>Payment Terms:</p>
+        <input type="text" />
+      </div>
+      <div class="input-div">
+        <p>Reference Number:</p>
+        <input type="number" />
+      </div>
+      <div class="input-div">
+        <p>Delivery Date:</p>
+        <input type="date" />
+      </div>
+      <div class="input-div">
+        <p>Currency:</p>
+        <select>
+          <option>Naira</option>
+        </select>
+      </div>
+    </div>
+    <!-- <div class="section item-list">
+      <div class="item-item">
+        <div class="item-sec">
+          <p class="name">Root Beer</p>
+          <p class="price1">₦<span>400,000.00</span></p>
+        </div>
+        <div class="item-sec">
+          <p><span class="quantity"><span>2</span> X </span><span class="price2">₦<span>200,000.00</span></span></p>
+          <div class="icon">
+            <ion-icon name="create-outline"></ion-icon>
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+      <div class="item-item">
+        <div class="item-sec">
+          <p class="name">Ginger Beer</p>
+          <p class="price1">₦<span>100,000.00</span></p>
+        </div>
+        <div class="item-sec">
+          <p><span class="quantity"><span>25</span> X </span><span class="price2">₦<span>4,000.00</span></span></p>
+          <div class="icon">
+            <ion-icon name="create-outline"></ion-icon>
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+      <div class="item-item">
+        <div class="item-sec">
+          <p class="name">Monster Energy Drink</p>
+          <p class="price1">₦<span>400,000.00</span></p>
+        </div>
+        <div class="item-sec">
+          <p><span class="quantity"><span>800</span> X </span><span class="price2">₦<span>500.00</span></span></p>
+          <div class="icon">
+            <ion-icon name="create-outline"></ion-icon>
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="section">
+      <p class="add-item" (click) ="this.addItem()">+ Add Item</p>
     </div>
     <div class="section">
-
+      <div class="input-div">
+        <p>Note/Comment:</p>
+        <textarea rows="3"></textarea>
+      </div>
+    </div>
+    <div class="summary">
+      <div class="section">
+        <p class="name">Subtotal:</p>
+        <p class="price1">₦<span>400,000.00</span></p>
+      </div>
+    </div>
+    <div class="add-buttons">
+      <p class="add-tax" (click)="this.addPayment('Tax')">Add Tax</p>
+      <p class="add-discount" (click)="this.addPayment('Discount')">Add Discount</p>
+    </div>
+    <!-- <ion-list>
+      <ion-item-sliding>
+        <ion-item-options side="start">
+          <ion-item-option (click)="primary">Edit</ion-item-option>
+        </ion-item-options>
+        <ion-item lines="none" mode="ios">
+          <div class="section2">
+            <p class="name">Discount:</p>
+            <p class="price1"><span>- </span> ₦<span>4,000.00</span></p>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item-sliding>
+        <ion-item-options side="start">
+          <ion-item-option (click)="primary">Edit</ion-item-option>
+        </ion-item-options>
+        <ion-item lines="none" mode="ios">
+          <div class="section2">
+            <p class="name">Tax:</p>
+            <p class="price1"><span>+</span> (<span>7</span>%) ₦<span>4,000.00</span></p>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list> -->
+    <div class="summary">
+      <div class="section">
+        <p class="name">Total</p>
+        <p class="price1">₦<span>450,000.00</span></p>
+      </div>
+    </div>
+    <div class="add-buttons">
+      <p class="add-quotation">Create Quotatation</p>
     </div>
   </div>
 </ion-content>

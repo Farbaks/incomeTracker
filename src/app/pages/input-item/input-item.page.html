@@ -1,0 +1,33 @@
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div class="buttons">
+      <button class="cancel" (click)="this.closeModal()">Cancel</button>
+      <button class="create">Add Item</button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="input-div fullwidth">
+      <p>Item Name:</p>
+      <input type="text" />
+    </div>
+    <div class="fullwidth flex-row">
+      <div class="input-div half-width">
+        <p>UOM:</p>
+        <input type="number" />
+      </div>
+      <div class="input-div half-width">
+        <p>Quantity:</p>
+        <input type="text" />
+      </div>
+    </div>
+    
+    <div class="input-div fullwidth">
+      <p>Unit Price:</p>
+      <input type="number" />
+    </div>
+    
+  </div>
+</ion-content>

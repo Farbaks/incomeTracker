@@ -30,7 +30,26 @@
 .ionModal .modal-wrapper {
     position: absolute;
     bottom: 0;
-    // --height: 70vh !important;
+    min-width: 100% !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.modal-shadow {
+    min-width: 100% !important;
+}
+.ionModal1 .modal-wrapper {
+    min-width: 100% !important;
+    position: absolute;
+    bottom: 0;
+    --height: 55vh !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.ionModal2 .modal-wrapper {
+    min-width: 100% !important;
+    position: absolute;
+    bottom: 0;
+    --height: 40vh !important;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }

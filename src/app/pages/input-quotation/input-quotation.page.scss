@@ -47,37 +47,232 @@ ion-toolbar {
 
 .section {
     width: 100%;
-    // height: 200px;
-    content: '';
-    // background-color: grey;
-    // border-radius: 15px;
-    margin-bottom: 20px;
-    // overflow: hidden;
-    // box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.1), 0px 0px 15px 2px rgba(0, 0, 0, 0.04);
+    // padding: 15px 16px;
+    box-sizing: border-box;
+    background-color: var(--ion-color-secondarycolor2);
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    scroll-behavior: smooth;
+    margin-bottom: 10px;
 
-    ion-item {
-        width: 100% !important;
-        --padding-start: 0px;
-        --padding-end: 0px;
-        --padding-top: 0px;
-        --padding-bottom: 0px;
+    .input-div {
+        width: 100%;
+        margin-bottom: 15px;
 
-        ion-label {
-            font-size: .7em;
-            font-weight: 600;
-            word-spacing: 1.5px;
+        p {
             margin: 0px;
+            font-size: 0.8em;
+            font-weight: 500;
+            word-spacing: 1px;
+            color: var(--ion-color-textcolor3);
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: solid 1px rgb(230, 230, 230);
+            font-size: .9em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: solid 1px rgb(230, 230, 230);
+        }
+    }
+
+    .item-item {
+        width: 100%;
+        padding: 5px 0px;
+        border-bottom: solid 1px rgb(230, 230, 230);
+
+        p {
+            margin: 0px;
+        }
+
+        .item-sec {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .name {
+                font-size: 0.8em;
+                font-weight: 500;
+                word-spacing: 1px;
+                color: var(--ion-color-textcolor3);
+            }
+
+            .price1 {
+                font-size: .95em;
+                font-weight: 600;
+                word-spacing: 1.5px;
+                color: var(--ion-color-textcolor4);
+            }
+
+            .quantity {
+                font-size: 0.7em;
+                font-weight: 600;
+                word-spacing: 1px;
+                color: var(--ion-color-textcolor3);
+            }
+
+            .price2 {
+                font-size: .8em;
+                font-weight: 600;
+                word-spacing: 1.5px;
+                color: var(--ion-color-textcolor4);
+            }
+
+            .icon {
+                ion-icon:first-child {
+                    margin-right: 10px;
+                    color: var(--ion-color-textcolor);
+                }
+
+                ion-icon:last-child {
+                    color: red
+                }
+            }
+        }
+    }
+
+    .add-item {
+        margin: 0px;
+        font-size: .8em;
+        padding: 10px 15px;
+        border-radius: 15px;
+        background-color: var(--ion-color-primarycolor);
+        color: white;
+    }
+
+}
+ion-list {
+    width: 100%;
+    margin-bottom: 10px;
+    ion-item {
+        width: 100%;
+        --inner-padding-end:0px !important;
+        --padding-start:0px !important;
+    }
+    
+    .section2 {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        // margin-bottom: 10px;
+
+        p{
+            margin: 0px;
+        }
+
+        .name {
+            font-size: 12.8px;
+            font-weight: 500;
+            word-spacing: 1px;
             color: var(--ion-color-textcolor3);
         }
 
-        ion-input {
-            --padding-start: 0px;
-            --padding-end: 0px;
-            --padding-top: 0px;
-            --padding-bottom: 0px;
-            --min-height: 40px !important;
+        .price1 {
+            font-size: 15.2px;
+            font-weight: 600;
+            word-spacing: 1.5px;
+            color: var(--ion-color-textcolor4);
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+}
+.summary {
+    width: 100%;
+    // padding: 15px 16px;
+    box-sizing: border-box;
+    background-color: var(--ion-color-secondarycolor2);
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    scroll-behavior: smooth;
+    margin-bottom: 10px;
+
+    .section {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        p{
+            margin: 0px;
         }
 
-    }
+        .name {
+            font-size: 0.8em;
+            font-weight: 500;
+            word-spacing: 1px;
+            color: var(--ion-color-textcolor3);
+        }
 
+        .price1 {
+            font-size: .95em;
+            font-weight: 600;
+            word-spacing: 1.5px;
+            color: var(--ion-color-textcolor4);
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+}
+.add-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+    .add-discount {
+        margin: 0px;
+        font-size: .8em;
+        padding: 10px 15px;
+        border-radius: 15px;
+        background-color: var(--ion-color-primarycolor);
+        color: white;
+        margin-left: 15px;
+    }
+    .add-tax {
+        margin: 0px;
+        font-size: .8em;
+        padding: 10px 0px;
+        border-radius: 15px;
+        color: var(--ion-color-primarycolor);
+        background-color: white;
+    }
+    .add-quotation{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        font-size: .8em;
+        padding: 10px 15px;
+        // border-radius: 15px;
+        background-color: var(--ion-color-primarycolor);
+        color: white;
+    }
 }
