@@ -13,7 +13,15 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    IonicModule.forRoot({ _forceStatusbarPadding: true }),
+    IonicModule.forRoot({
+      mode: 'ios'
+    }),
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -21,4 +29,4 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

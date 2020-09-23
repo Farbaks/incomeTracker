@@ -13,14 +13,22 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
+      // this.statusBar.styleLightContent();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#ffffff');
+      // if (cordova.platformId == 'android') {
+      //   this.statusBar.overlaysWebView(true);
+      //   this.statusBar.backgroundColorByHexString('#ffffff');
+      // }
+
       this.splashScreen.hide();
     });
   }
