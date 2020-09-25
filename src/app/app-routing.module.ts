@@ -30,7 +30,8 @@ const routes: Routes = [
   {
     path: 'job-detail',
     loadChildren: () => import('./pages/job-detail/job-detail.module').then( m => m.JobDetailPageModule)
-  },  {
+  },
+  {
     path: 'new-job',
     loadChildren: () => import('./pages/new-job/new-job.module').then( m => m.NewJobPageModule)
   },
@@ -59,13 +60,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/signin/signin.module').then( m => m.SigninPageModule)
   },
   {
-    path: 'sigup',
-    loadChildren: () => import('./pages/sigup/sigup.module').then( m => m.SigupPageModule)
-  },
-  {
     path: 'forgotpassword',
     loadChildren: () => import('./pages/forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+  },  {
+    path: 'signup',
+    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
+
 
 ];
 

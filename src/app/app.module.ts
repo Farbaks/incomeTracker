@@ -18,9 +18,9 @@ import { AppRoutingModule } from './app-routing.module';
     IonicModule.forRoot(), 
     AppRoutingModule, 
     IonicModule.forRoot({ _forceStatusbarPadding: true }),
-    IonicModule.forRoot({
-      mode: 'ios'
-    }),
+    // IonicModule.forRoot({
+    //   mode: 'ios'
+    // }),
   ],
   providers: [
     StatusBar,

@@ -1,9 +1,34 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>signin</ion-title>
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div class="top-section">
+      <div>
+        <!-- <p class="profile-heading">Signin</p> -->
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="container">
+    <div class="body">
+      <div class="body-heading">
+        <p class="profile-heading">Sign In</p>
+      </div>
+      <div class="section">
+        <div class="input-div">
+          <p>Email:</p>
+          <input type="email" />
+        </div>
+        <div class="input-div">
+          <p>Password:</p>
+          <input type="password" />
+        </div>
+      </div>
+      <p [routerLink]='["/forgotpassword"]' class="text"><span class="link">Forgot password</span></p>
+      <div class="add-buttons">
+        <p class="add-quotation" [routerLink]='["/tabs"]'>Login</p>
+      </div>
+      <p class="text">Don't have an account? <span [routerLink]='["/signup"]' class="link">Create one</span></p>
+    </div>
+  </div>
 </ion-content>

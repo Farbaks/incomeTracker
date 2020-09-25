@@ -32,7 +32,7 @@ export class InputQuotationPage implements OnInit {
       mode: "ios",
       cssClass: 'ionModal1',
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
+      // presentingElement: this.routerOutlet.nativeEl,
     });
     modal.onDidDismiss().then(response=>{
       console.log(response.data);
@@ -49,7 +49,7 @@ export class InputQuotationPage implements OnInit {
       mode: "ios",
       cssClass: 'ionModal2',
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      // presentingElement: this.routerOutlet.nativeEl
     });
     modal.onDidDismiss().then(response=>{
       console.log(response.data);
