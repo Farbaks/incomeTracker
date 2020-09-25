@@ -1,5 +1,5 @@
 {
-  "name": "Income Tracker",
+  "name": "incomeTracker",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -25,7 +25,6 @@
     "@ionic/angular": "^5.0.0",
     "chart.js": "^2.9.3",
     "chartjs-plugin-zoom": "^0.7.7",
-    "cordova-android": "8.1.0",
     "ng2-charts": "^2.4.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
@@ -58,7 +57,8 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.5",
+    "webpack-dev-server": "^3.11.0"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -72,8 +72,6 @@
       },
       "cordova-plugin-ionic-keyboard": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
