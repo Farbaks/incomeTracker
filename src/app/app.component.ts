@@ -20,14 +20,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
-      // this.statusBar.styleLightContent();
-      this.statusBar.overlaysWebView(true);
-      this.statusBar.backgroundColorByHexString('#ffffff');
-      // if (cordova.platformId == 'android') {
-      //   this.statusBar.overlaysWebView(true);
-      //   this.statusBar.backgroundColorByHexString('#ffffff');
-      // }
+      this.statusBar.styleLightContent();
 
       this.splashScreen.hide();
     });
