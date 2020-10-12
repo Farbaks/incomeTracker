@@ -53,3 +53,16 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
+.loader-class {
+    --spinner-color: var(--ion-color-primarycolor);
+}
+.error-toast {
+    --background:var(--ion-color-danger);
+    --color: white;
+    font-size: .7em;
+}
+.success-toast {
+    --background:var(--ion-color-success-shade);
+    --color: white;
+    font-size: .7em;
+}

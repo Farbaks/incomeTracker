@@ -15,37 +15,37 @@
   <div class="container">
     <div class="image-section">
       <div class="image-container">
-        <img src="../../../assets/food/shawarma1.jpg" />
+        <img src="{{pictureURL}}" />
       </div>
       <div class="add-buttons">
-        <p class="add-tax">Remove Picture</p>
-        <p class="add-discount">Change Picture</p>
+        <!-- <p class="add-tax">Remove Picture</p> -->
+        <p class="add-discount" (click)="this.selectPicture()">Choose Picture</p>
       </div>
     </div>
     <div class="section">
       <div class="input-div">
         <p>Name:</p>
-        <input type="text" />
+        <input type="text" [(ngModel)] = "this.userAccount.name" />
       </div>
       <div class="input-div">
         <p>Email:</p>
-        <input type="email" />
+        <input type="email" id="email" [(ngModel)] = "this.userAccount.email" />
       </div>
       <div class="input-div">
         <p>Phone Number:</p>
-        <input type="text" />
+        <input type="text" id="phone" [(ngModel)] = "this.userAccount.phoneNumber" />
       </div>
       <div class="input-div">
         <p>Company Name:</p>
-        <input type="text" />
+        <input type="email" id="company_name" [(ngModel)] = "this.userAccount.companyName" />
       </div>
       <div class="input-div">
         <p>Company Address:</p>
-        <input type="text" />
+        <input type="text" id="company_address" [(ngModel)] = "this.userAccount.companyAddress" />
       </div>
     </div>
     <div class="add-buttons">
-      <p class="add-quotation">Save</p>
+      <p class="add-quotation" (click)="this.updateUser()">Save</p>
     </div>
   </div>
 </ion-content>

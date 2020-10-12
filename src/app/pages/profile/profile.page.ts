@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { GlobalService } from 'src/app/services/global.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,10 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
   position: any;
-
-  constructor() { }
+  pictureURL: string = "/assets/food/pancakes.jpg";
+  userAccount: any ={};
+  constructor(
+    private imagePicker: ImagePicker,
+    private usersService: UsersService,
+    private globalService: GlobalService
+  ) {
+  }
 
   ngOnInit() {
+    this.fetchUserDetails();
   }
 
   logScrolling(event) {
@@ -22,6 +32,58 @@ export class ProfilePage implements OnInit {
       document.getElementById('header').style.borderBottom = "none";
     }
     this.position = scroll;
+  }
+
+  selectPicture() {
+    let options = {
+      maximumImagesCount: 1,
+    };
+    this.imagePicker.getPictures(options).then((results) => {
+      this.pictureURL = results[0];
+    }, (err) => {
+      alert(err);
+    });
+  }
+
+  fetchUserDetails() {
+    this.usersService.getUser().then(user => {
+      this.userAccount = user;
+      this.pictureURL = this.userAccount.pictureUrl;
+    });
+  }
+
+  updateUser() {
+    this.globalService.showLoader('Updating your account');
+    if ([this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.pictureURL].includes("") || [this.userAccount.name, this.userAccount.email, this.userAccount.phone, this.userAccount.companyName, this.userAccount.companyAddress, this.pictureURL].includes(null)) {
+      let message = "Please fill all fields and try again.",
+        duration = 3000,
+        type = 'error';
+      this.globalService.dismissLoader();
+      this.globalService.showToast(message, duration, type);
+    }
+    else {
+      let user = {
+        name: this.userAccount.name,
+        email: this.userAccount.email,
+        phoneNumber: this.userAccount.phoneNumber,
+        companyName: this.userAccount.companyName,
+        companyAddress: this.userAccount.companyAddress,
+        pictureUrl: this.pictureURL || "/src/assets/food/shawarma1.jpg"
+      }
+      this.usersService.updateUserDetails(user).then(result => {
+        this.globalService.dismissLoader();
+        let message = "Account has been successfully updated.",
+          duration = 3000,
+          type = 'success';
+        this.globalService.showToast(message, duration, type);
+      }).catch(error => {
+        let message = "Account could not be updated. Try again later",
+          duration = 3000,
+          type = 'error';
+        this.globalService.showToast(message, duration, type);
+        this.globalService.dismissLoader();
+      });
+    }
   }
 
 }

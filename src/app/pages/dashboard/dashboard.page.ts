@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
-import { ChartsModule } from 'ng2-charts';
+import { UsersService } from 'src/app/services/users.service';
+import { GlobalService } from 'src/app/services/global.service';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,11 +17,19 @@ export class DashboardPage implements OnInit {
   chart2: any;
   colorArray: any;
   position: any;
-  constructor() {
+  userAccount:any;
+  constructor(
+    private usersService: UsersService,
+    private globalService: GlobalService,
+    private navController: NavController
+  ) {
     this.position = window.pageYOffset;
+    this.userAccount = {};
+    this.userAccount.pictureUrl="/assets/food/cake1.jpg";
   }
 
   ngOnInit() {
+    this.fetchUser();
   }
 
   ionViewDidEnter() {
@@ -118,6 +129,14 @@ export class DashboardPage implements OnInit {
         },
       },
     });
+  }
+
+  fetchUser() {
+    this.usersService.fetchUserFromDatabase().then(user => {
+      
+    }).catch(error => {
+      this.navController.navigateRoot(`/signup`);
+    })
   }
 
 }
