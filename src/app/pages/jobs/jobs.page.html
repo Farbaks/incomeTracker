@@ -7,6 +7,10 @@
 </ion-header>
 
 <ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
+  <ion-refresher slot="fixed">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="container">
     <div class="job-list">
       <div class="job-item" [routerLink] = "['2']">

@@ -39,7 +39,7 @@ export class JobsPage implements OnInit {
       document.getElementById('header').style.borderBottom = "none";
     }
     this.position = scroll;
-    console.dir('red');
+    // console.dir('red');
   }
 
 }

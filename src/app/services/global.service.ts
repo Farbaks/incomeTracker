@@ -33,11 +33,17 @@ export class GlobalService {
   }
 
   async dismissLoader() {
-    this.isLoading = false;
-    // return await this.loadingController.dismiss();
+    try {
+      this.isLoading = false;
+      return await this.loadingController.dismiss();
+    }
+    catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
-  async showToast(text, duration, type) {
+  async showToast(text, duration, type, position?) {
     let toastType;
     if (type == 'error') {
       toastType = 'error-toast';
@@ -49,8 +55,41 @@ export class GlobalService {
       message: text,
       duration: duration || 0,
       cssClass: toastType,
-      mode: 'ios'
+      mode: 'ios',
+      position: position || "bottom"
     });
     this.toast.present();
+  }
+
+  validateEmail(response: any) {
+    var email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (response.match(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  validatePhone(phone) {
+    var phoneno = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/g;
+    return phone.match(phoneno) ? true : false;
+  }
+
+  nairaFormat(currency, amount) {
+    try {
+      if (amount % 1 == 0) {
+        return currency + (amount).toLocaleString() + ".00";
+      }
+      return currency + (amount).toLocaleString();
+    }
+    catch (error) {
+      return currency + (0).toLocaleString() + ".00";
+    }
+  }
+
+  changeDate(date) {
+    var from = date.split("/")
+    var f = new Date(from[2], from[1] - 1, from[0]);
+    return f;
   }
 }

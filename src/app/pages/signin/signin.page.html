@@ -17,16 +17,16 @@
       <div class="section">
         <div class="input-div">
           <p>Email:</p>
-          <input type="email" />
+          <input type="email" [(ngModel)] = "this.userAccount.email" />
         </div>
         <div class="input-div">
           <p>Password:</p>
-          <input type="password" />
+          <input type="password" [(ngModel)] = "this.userAccount.password"  />
         </div>
       </div>
       <p [routerLink]='["/forgotpassword"]' class="text"><span class="link">Forgot password</span></p>
       <div class="add-buttons">
-        <p class="add-quotation" [routerLink]='["/tabs"]'>Login</p>
+        <p class="add-quotation" (click)= "this.signin()">Login</p>
       </div>
       <p class="text">Don't have an account? <span [routerLink]='["/signup"]' class="link">Create one</span></p>
     </div>

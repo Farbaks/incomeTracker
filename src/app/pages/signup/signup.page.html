@@ -32,33 +32,39 @@
         </div>
         <div class="input-div">
           <p>Email:</p>
-          <input type="email" id="email" [(ngModel)] = "this.userAccount.email" />
+          <input type="email" [(ngModel)] = "this.userAccount.email" />
         </div>
         <div class="input-div">
           <p>Phone Number:</p>
-          <input type="text" id="phone" [(ngModel)] = "this.userAccount.phoneNumber" />
+          <input type="text" [(ngModel)] = "this.userAccount.phoneNumber" />
         </div>
         <div class="input-div">
           <p>Company Name:</p>
-          <input type="email" id="company_name" [(ngModel)] = "this.userAccount.companyName" />
+          <input type="email" [(ngModel)] = "this.userAccount.companyName" />
         </div>
         <div class="input-div">
           <p>Company Address:</p>
-          <input type="text" id="company_address" [(ngModel)] = "this.userAccount.companyAddress" />
+          <input type="text" [(ngModel)] = "this.userAccount.companyAddress" />
         </div>
-        <!-- <div class="input-div">
+        <div class="input-div">
+          <p>Currency:</p>
+          <select [(ngModel)] = "this.userAccount.currency" >
+            <option *ngFor = "let currency of currencies" value="{{currency.currencies.symbol}}">{{currency.currencies.code}}</option>
+          </select>
+        </div>
+        <div class="input-div">
           <p>Password:</p>
-          <input type="password" />
+          <input type="password" [(ngModel)] = "this.userAccount.password1" />
         </div>
         <div class="input-div">
           <p>Re enter Password:</p>
-          <input type="password" />
-        </div> -->
+          <input type="password" [(ngModel)] = "this.userAccount.password2" />
+        </div>
       </div>
       <div class="add-buttons">
         <p class="add-quotation" (click)='this.signup()'>Create Account</p>
       </div>
-      <!-- <p class="text">Already have an account? <span [routerLink]='["/signin"]' class="link">Sign in</span></p> -->
+      <p class="text">Already have an account? <span [routerLink]='["/signin"]' class="link">Sign in</span></p>
     </div>
   </div>
 </ion-content>

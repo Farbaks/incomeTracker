@@ -4,6 +4,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,23 +18,24 @@ export class DashboardPage implements OnInit {
   chart2: any;
   colorArray: any;
   position: any;
-  userAccount:any;
+  pictureUrl: any;
+  jobs: [];
+  userAccount: any;
   constructor(
+    private router: Router,
     private usersService: UsersService,
     private globalService: GlobalService,
-    private navController: NavController
+    private navController: NavController,
+    private nativeStorage: NativeStorage
   ) {
     this.position = window.pageYOffset;
+    this.jobs = [];
     this.userAccount = {};
-    this.userAccount.pictureUrl="/assets/food/cake1.jpg";
+    this.pictureUrl = "/assets/user.png";
   }
 
   ngOnInit() {
-    this.fetchUser();
-  }
-
-  ionViewDidEnter() {
-    this.loadChart();
+    this.loadUserInfo();
   }
 
   logScrolling(event) {
@@ -47,17 +49,81 @@ export class DashboardPage implements OnInit {
     this.position = scroll;
   }
 
-  loadChart() {
+  doRefresh(event) {
+    this.loadUserInfo();
+    event.target.complete();
+  }
+
+  loadUserInfo() {
+    this.usersService.getUserInfo().subscribe(
+      (userData) => {
+        this.userAccount = userData.data;
+        this.usersService.getUserReport().subscribe(
+          (response) => {
+            this.userAccount.totalIncome = this.globalService.nairaFormat(response.data.currency, response.data.totalIncome);
+            this.userAccount.monthIncome = this.globalService.nairaFormat(response.data.currency, response.data.report[0].income) || this.globalService.nairaFormat(response.data.currency, 0);
+            let labels = [];
+            let incomes = [];
+            if (response.data.report.length > 0) {
+              response.data.report.forEach(element => {
+                labels.push(element.month + ", " + element.year);
+                incomes.push(element.income);
+              });
+            }
+            else {
+              labels = ["January", "Febrary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+              incomes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
+            let chartData = {
+              chart1: {
+                labels: labels,
+                incomes: incomes
+              },
+              chart2: {
+                data: [userData.data.completedJobs, userData.data.pendingJobs, userData.data.canceledJobs,]
+              }
+            }
+            this.loadChart(chartData);
+            this.usersService.getUserJobs(0, 5).subscribe(
+              (jobData) => {
+                this.jobs = jobData.data;
+              },
+              (error) => {
+                if (error.message == "No token sent in request" || error.message == "Invalid token" || error.message == "Not authorized to carry out this action") {
+                  this.router.navigate(['/signin'], { replaceUrl: true })
+                }
+              }
+            );
+          },
+          (error) => {
+            if (error.message == "No token sent in request" || error.message == "Invalid token" || error.message == "Not authorized to carry out this action") {
+              this.router.navigate(['/signin'], { replaceUrl: true })
+            }
+          }
+        );
+      },
+      (error) => {
+        if (error.message == "No token sent in request" || error.message == "Invalid token" || error.message == "Not authorized to carry out this action") {
+          this.router.navigate(['/signin'], { replaceUrl: true })
+        }
+        else {
+          this.router.navigate(['/signin'], { replaceUrl: true })
+        }
+      }
+    );
+  }
+
+  loadChart(data) {
     // Line chart
     let ctx = this.myChart.nativeElement;
     ctx.fillStyle = "red";
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        labels: data.chart1.labels,
         datasets: [{
           label: 'Income',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          data: data.chart1.data,
           backgroundColor: 'rgba(241, 43, 126, .1)',
           borderColor: 'rgb(241, 43, 126)',
           borderWidth: 2,
@@ -108,7 +174,7 @@ export class DashboardPage implements OnInit {
         labels: ['Completed Jobs', 'Pending Jobs', 'Canceled'],
         datasets: [{
           label: 'Income',
-          data: [350, 34, 16],
+          data: data.chart1.data,
           backgroundColor: ['#4BB543', 'orange', 'red'],
           borderColor: ['#4BB543', 'orange', 'red'],
           borderWidth: 2,
@@ -130,13 +196,4 @@ export class DashboardPage implements OnInit {
       },
     });
   }
-
-  fetchUser() {
-    this.usersService.fetchUserFromDatabase().then(user => {
-      
-    }).catch(error => {
-      this.navController.navigateRoot(`/signup`);
-    })
-  }
-
 }

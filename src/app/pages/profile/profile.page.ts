@@ -46,10 +46,6 @@ export class ProfilePage implements OnInit {
   }
 
   fetchUserDetails() {
-    this.usersService.getUser().then(user => {
-      this.userAccount = user;
-      this.pictureURL = this.userAccount.pictureUrl;
-    });
   }
 
   updateUser() {
@@ -70,19 +66,6 @@ export class ProfilePage implements OnInit {
         companyAddress: this.userAccount.companyAddress,
         pictureUrl: this.pictureURL || "/src/assets/food/shawarma1.jpg"
       }
-      this.usersService.updateUserDetails(user).then(result => {
-        this.globalService.dismissLoader();
-        let message = "Account has been successfully updated.",
-          duration = 3000,
-          type = 'success';
-        this.globalService.showToast(message, duration, type);
-      }).catch(error => {
-        let message = "Account could not be updated. Try again later",
-          duration = 3000,
-          type = 'error';
-        this.globalService.showToast(message, duration, type);
-        this.globalService.dismissLoader();
-      });
     }
   }
 
