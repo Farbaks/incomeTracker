@@ -7,142 +7,39 @@
 </ion-header>
 
 <ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
-  <ion-refresher slot="fixed">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>
     </ion-refresher-content>
   </ion-refresher>
   <div class="container">
-    <div class="job-list">
-      <div class="job-item" [routerLink] = "['2']">
+    <div class="job-list" *ngIf="this.loading == false && this.jobs.length != 0">
+      <div class="job-item" *ngFor="let job of jobs" [routerLink] = "[job.id]">
         <div class="job-con">
-          <p class="heading1">7up Bottling Company</p>
-          <p class="status bggreen">Completed</p>
+          <p class="heading1">{{job.companyName}}</p>
+          <p *ngIf="job.status == 'completed'" class="status bggreen">{{job.status}}</p>
+          <p *ngIf="job.status != 'completed' && job.status != canceled" class="status bgorange">{{job.status}}</p>
+          <p *ngIf="job.status == 'canceled'" class="status bgred">{{job.status}}</p>
         </div>
         <div class="job-con2">
           <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
+            <p *ngIf="job.quotation != 'Quotation has not been created'" class="heading1">
+              {{this.globalService.nairaFormat(job.quotation.currency, job.quotation.totalJobCost)}}
+            </p>
+            <p *ngIf="job.quotation == 'Quotation has not been created'" class="heading1">
+              00.00
+            </p>
+            <p class="date">{{this.globalService.formatDate(job.created_at)}}</p>
           </div>
           <ion-icon name="chevron-forward"></ion-icon>
         </div>
       </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Serve Consulting</p>
-          <p class="status bgorange">Quotation pending</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>1,900,000.00</span></p>
-            <p class="date">16/08/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Greenpeg</p>
-          <p class="status bggreen">Quotation Accepted</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Serve Consulting</p>
-          <p class="status bgorange">Quotation pending</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>1,900,000.00</span></p>
-            <p class="date">16/08/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Greenpeg</p>
-          <p class="status bggreen">Quotation Accepted</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">7up Bottling Company</p>
-          <p class="status bggreen">Completed</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Serve Consulting</p>
-          <p class="status bgorange">Quotation pending</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>1,900,000.00</span></p>
-            <p class="date">16/08/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Greenpeg</p>
-          <p class="status bggreen">Quotation Accepted</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Serve Consulting</p>
-          <p class="status bgorange">Quotation pending</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>1,900,000.00</span></p>
-            <p class="date">16/08/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
-      <div class="job-item" [routerLink] = "['2']">
-        <div class="job-con">
-          <p class="heading1">Greenpeg</p>
-          <p class="status bggreen">Quotation Accepted</p>
-        </div>
-        <div class="job-con2">
-          <div class="job-con3">
-            <p class="heading1">₦<span>350,900.00</span></p>
-            <p class="date">22/04/2020</p>
-          </div>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </div>
-      </div>
+    </div>
+    <div class="message" *ngIf="this.loading == false && this.jobs.length == 0">
+      <p>You don't have any job yet. <span (click) = "this.newJobModal()">Create One</span></p>
+    </div>
+    <div class="message" *ngIf="this.loading == true && this.jobs.length == 0">
+      <ion-spinner name="lines">Fetching list of jobs</ion-spinner>
+
     </div>
   </div>
 
@@ -155,4 +52,9 @@
     </a>
     
   </ion-fab>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="more($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="lines">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

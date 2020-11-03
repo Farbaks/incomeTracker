@@ -70,7 +70,7 @@ export class GlobalService {
     }
   }
 
-  validatePhone(phone) {
+  validatePhone(phone:any) {
     var phoneno = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/g;
     return phone.match(phoneno) ? true : false;
   }
@@ -91,5 +91,11 @@ export class GlobalService {
     var from = date.split("/")
     var f = new Date(from[2], from[1] - 1, from[0]);
     return f;
+  }
+
+  formatDate(date) {
+    var d = new Date(date);
+    let formatted_date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    return formatted_date;
   }
 }

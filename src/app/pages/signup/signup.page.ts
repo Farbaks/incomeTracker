@@ -23,22 +23,21 @@ export class SignupPage implements OnInit {
     private globalService: GlobalService,
     private nativeStorage: NativeStorage
   ) {
+    localStorage.removeItem("token");
     this.userAccount = new NewUser;
-    this.nativeStorage.getItem('IMEI')
-      .then(
-        (deviceId) => {
-          this.userAccount.deviceId = deviceId;
-        },
-        error => console.log(error)
-      );
+    this.userAccount.deviceId = localStorage.getItem('IMEI');
     this.getCurrency();
   }
 
   ngOnInit() {
   }
 
+  log() {
+    console.log(this.userAccount.currency);
+  }
+
   getCurrency() {
-    this.usersService.register(this.userAccount)
+    this.usersService.fetchCurrency()
       .subscribe(
         (data) => {
           this.currencies = data;
@@ -94,15 +93,10 @@ export class SignupPage implements OnInit {
             if (data.message == "User account has been created") {
               this.globalService.showToast(data.message, 2000, "success");
               this.globalService.dismissLoader();
-              this.nativeStorage.setItem('token', data.apiToken)
-                .then(
-                  () => {
-                    setTimeout(() => {
-                      this.router.navigate(['/tabs'], { replaceUrl: true })
-                    }, 2000);
-                  },
-                  error => alert(error)
-                )
+              localStorage.setItem('token', data.apiToken);
+              setTimeout(() => {
+                this.router.navigate(['/tabs'], { replaceUrl: true })
+              }, 2000);
             }
           },
           (error) => {

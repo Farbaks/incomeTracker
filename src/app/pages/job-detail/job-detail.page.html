@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/jobs" icon="arrow-back" text=""></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" (click) = "this.moreOptions()">
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,17 +16,13 @@
         <ion-icon name="people-circle-outline"></ion-icon>
       </div>
       <div class="user-names">
-        <p class="name">7up Bottling Company</p>
-        <p class="date">22/03/2020</p>
+        <p class="name">{{this.jobItem[0].companyName}}</p>
+        <p class="date">{{this.globalService.formatDate(this.jobItem[0].created_at)}}</p>
       </div>
-      <div class="action-buttons">
+      <div class="action-buttons"  *ngIf="this.jobItem[0].quotation == 'Quotation has not been created'">
         <div class="action-button" [routerLink] = '["quote"]'>
           <ion-icon name="Create"></ion-icon>
           <p>Create quotation</p>
-        </div>
-        <div class="action-button" (click)="this.viewPDF()">
-          <ion-icon name="create"></ion-icon>
-          <p>View quotation</p>
         </div>
       </div>
       <!-- <div class="action-buttons">
@@ -62,27 +61,39 @@
     <div class="job-con">
       <div class="job-sec">
         <p class="heading1">Cost of Job</p>
-        <p class="heading2">₦<span>350,900.00</span></p>
+        <p *ngIf="this.jobItem[0].quotation != 'Quotation has not been created'" class="heading1">
+          {{this.globalService.nairaFormat(this.jobItem[0].quotation.currency, this.jobItem[0].quotation.totalJobCost)}}
+        </p>
+        <i *ngIf="this.jobItem[0].quotation == 'Quotation has not been created'" class="heading1">
+          Quotation has not been created yet.
+        </i>
       </div>
       <div class="job-sec">
         <p class="heading1">Profit</p>
-        <p class="profit">₦<span>200,000.00</span></p>
+        <p *ngIf="this.jobItem[0].quotation != 'Quotation has not been created'" class="heading1">
+          {{this.globalService.nairaFormat(this.jobItem[0].quotation.currency, this.jobItem[0].quotation.profit)}}
+        </p>
+        <i *ngIf="this.jobItem[0].quotation == 'Quotation has not been created'" class="heading1">
+          Quotation has not been created yet.
+        </i>
       </div>
       <div class="job-sec">
         <p class="heading1">Contact Name</p>
-        <p class="heading2">Mr Jimoh</p>
+        <p class="heading2">{{this.jobItem[0].contactName}}</p>
       </div>
       <div class="job-sec">
         <p class="heading1">Contact Phone Number</p>
-        <p class="heading2">08045251688</p>
+        <a class="heading2" href="tel:{{this.jobItem[0].contactNumber}}">{{this.jobItem[0].contactNumber}}</a>
       </div>
       <div class="job-sec">
         <p class="heading1">Comment</p>
-        <p class="heading2">This is my comment on this job.</p>
+        <p class="heading2">{{this.jobItem[0].comment || 'No comment'}}</p>
       </div>
       <div class="job-sec">
         <p class="heading1">Status</p>
-        <p class="status bggreen">Completed</p>
+        <p *ngIf="this.jobItem[0].status == 'completed'" class="status bggreen">{{this.jobItem[0].status}}</p>
+          <p *ngIf="this.jobItem[0].status != 'completed' && this.jobItem[0].status != canceled" class="status bgorange">{{this.jobItem[0].status}}</p>
+          <p *ngIf="this.jobItem[0].status == 'canceled'" class="status bgred">{{this.jobItem[0].status}}</p>
       </div>
     </div>
   </div>

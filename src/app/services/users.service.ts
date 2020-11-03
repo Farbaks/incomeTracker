@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { NewUser, User, response } from 'src/app/classes/user';
+import { NewUser, User, response, NewJob } from 'src/app/classes/user';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
@@ -14,43 +14,35 @@ export class UsersService {
   domainKey = 'https://gentle-ravine-26248.herokuapp.com/api/';
   httpOptions2: { headers: HttpHeaders; responseType?: 'json'; };
   // domainKey = 'http://127.0.0.1:8000/api/';
-  token: any = "";
   constructor(private http: HttpClient, private nativeStorage: NativeStorage,private uniqueDeviceID: UniqueDeviceID,) {
-    this.nativeStorage.getItem('token')
-      .then(
-        (token) => {
-          this.token = token;
-          this.httpOptions2 = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Authorization': 'Bearer ' + token,
-            })
-          };
-        },
-        error => {
-          this.httpOptions2 = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Authorization': 'Bearer ',
-            })
-          };
-        }
-      );
+    
+  }
+  loadToken() {
+    try {
+      this.httpOptions2 = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        })
+      };
+    }
+    catch(error) {
+      this.httpOptions2 = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        })
+      };
+    }
   }
 
-  // Http Options
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
     })
   };
-
-
-
-
 
   // Handle API errors
   handleError(error: HttpErrorResponse) {
@@ -66,7 +58,7 @@ export class UsersService {
   // Register User
   fetchCurrency() {
     return this.http
-      .get<response>('https://restcountries.eu/rest/v2/all' + this.httpOptions)
+      .get<response>('https://restcountries.eu/rest/v2/all')
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -75,8 +67,9 @@ export class UsersService {
 
   // Register User
   register(user: NewUser): Observable<any> {
+    this.loadToken();
     return this.http
-      .post<any>(this.domainKey + 'users/signup', JSON.stringify(user), this.httpOptions2)
+      .post<any>(this.domainKey + 'users/signup', JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -86,7 +79,7 @@ export class UsersService {
   // Sign in User
   signin(user: User) {
     return this.http
-      .post<response>(this.domainKey + 'users/signin', JSON.stringify(user), this.httpOptions2)
+      .post<response>(this.domainKey + 'users/signin', JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -96,7 +89,7 @@ export class UsersService {
   // Forgot password
   forgotpassword(user: User) {
     return this.http
-      .post<response>(this.domainKey + 'users/reset', JSON.stringify(user), this.httpOptions2)
+      .post<response>(this.domainKey + 'users/reset', JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -105,6 +98,7 @@ export class UsersService {
 
   // getUserInfo
   getUserInfo() {
+    this.loadToken();
     return this.http
       .get<response>(this.domainKey + 'user', this.httpOptions2)
       .pipe(
@@ -114,12 +108,13 @@ export class UsersService {
   }
   // getUserReport
   getUserJobs(offset, limit) {
+    this.loadToken();
     let body = {
       "offset": offset,
       "limit": limit
     }
     return this.http
-      .post<response>(this.domainKey + 'jobs/', JSON.stringify(body), this.httpOptions2)
+      .post<response>(this.domainKey + 'jobs', JSON.stringify(body), this.httpOptions2)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -127,8 +122,19 @@ export class UsersService {
   }
   // get user jobs
   getUserReport() {
+    this.loadToken();
     return this.http
       .get<response>(this.domainKey + 'jobs/report', this.httpOptions2)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+  // Create new job
+  createNewJob(data:NewJob) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'jobs/new', data, this.httpOptions2)
       .pipe(
         retry(1),
         catchError(this.handleError)

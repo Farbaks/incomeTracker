@@ -33,3 +33,10 @@ export class UpdateUser {
     companyAddress:string;
     pictureUrl:any;
 }
+
+export class NewJob {
+    companyName:string = "";
+    contactName:string = "";
+    contactNumber:string = "";
+    comment:string = "";
+}

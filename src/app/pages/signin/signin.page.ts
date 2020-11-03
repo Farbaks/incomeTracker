@@ -11,7 +11,7 @@ import { User } from 'src/app/classes/user';
   styleUrls: ['./signin.page.scss'],
 })
 export class SigninPage implements OnInit {
-
+  
   userAccount: User;
   constructor(
     private router: Router,
@@ -19,14 +19,9 @@ export class SigninPage implements OnInit {
     private globalService: GlobalService,
     private nativeStorage: NativeStorage
   ) {
+    localStorage.removeItem("token");
     this.userAccount = new User;
-    this.nativeStorage.getItem('IMEI')
-      .then(
-        (deviceId) => {
-          this.userAccount.deviceId = deviceId;
-        },
-        error => console.log(error)
-      );
+    this.userAccount.deviceId = localStorage.getItem('IMEI');
   }
 
   ngOnInit() {
@@ -54,16 +49,10 @@ export class SigninPage implements OnInit {
             if (data.message == "Login succesful") {
               this.globalService.showToast(data.message, 2000, "success");
               this.globalService.dismissLoader();
-              this.nativeStorage.setItem('token', data.apiToken)
-                .then(
-                  () => {
-                    console.log("token was set")
-                    setTimeout(() => {
-                      this.router.navigate(['/tabs'], { replaceUrl: true })
-                    }, 2000);
-                  },
-                  error => alert(error)
-                )
+              localStorage.setItem('token', data.apiToken);
+              setTimeout(() => {
+                this.router.navigate(['/tabs'], { replaceUrl: true })
+              }, 2000);
             }
           },
           (error) => {

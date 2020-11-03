@@ -4,7 +4,6 @@ import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,8 +24,7 @@ export class DashboardPage implements OnInit {
     private router: Router,
     private usersService: UsersService,
     private globalService: GlobalService,
-    private navController: NavController,
-    private nativeStorage: NativeStorage
+    private navController: NavController
   ) {
     this.position = window.pageYOffset;
     this.jobs = [];

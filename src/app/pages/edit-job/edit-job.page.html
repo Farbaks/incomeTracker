@@ -1,0 +1,23 @@
+<ion-header translucent="true">
+  <ion-toolbar class="toolbar1" id="header">
+    <div class="buttons">
+      <button class="cancel" (click)="this.closeModal()">Cancel</button>
+      <button class="create">Update Job</button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="input-div fullwidth">
+      <p>Status:</p>
+      <select>
+        <option>Pending Quotation Approval</option>
+        <option>Pending Job Completion</option>
+        <option>Pending Payment</option>
+        <option>Completed</option>
+        <option>Canceled</option>
+      </select>
+    </div>
+  </div>
+</ion-content>

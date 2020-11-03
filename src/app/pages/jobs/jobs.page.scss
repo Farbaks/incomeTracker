@@ -109,6 +109,7 @@ ion-content {
     margin-top: 10px;
     padding: 10px 16px 0px 16px;
     .container-heading2 {
+        text-decoration: none;
         font-size: .9em;
         font-weight: 500;
         word-spacing: 1px;
@@ -192,6 +193,20 @@ ion-content {
             background-color: orange;
         }
     }
+}
+.message {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px;
+
+    p, ion-spinner {
+        font-size: .7em;
+        span {
+            color:var(--ion-color-primarycolor);
+        }
+    } 
 }
 ion-fab-button  {
     --background: var(--ion-color-primarycolor);

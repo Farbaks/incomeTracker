@@ -30,20 +30,19 @@ export class AppComponent {
 
       this.splashScreen.hide();
 
-      // this.getImei();
+      this.getImei();
     });
   }
   async getImei() {
     this.uniqueDeviceID.get()
       .then((uuid: any) => {
-        this.nativeStorage.setItem('IMEI', uuid)
-        .then(
-          () => {
-          },
-          error => console.log(error)
-        )
+        localStorage.setItem('IMEI', uuid);
+        console.log(uuid);
       })
-      .catch((error: any) => console.log(error));
+      .catch((error: any) => {
+        console.log(error);
+        localStorage.setItem('IMEI', '0000-0000-0000-0000');
+      });
   }
 
 }

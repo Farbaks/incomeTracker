@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global.service';
+import { UsersService } from 'src/app/services/users.service';
 import { NewJobPage } from '../new-job/new-job.page';
 
 @Component({
@@ -9,11 +11,23 @@ import { NewJobPage } from '../new-job/new-job.page';
 })
 export class JobsPage implements OnInit {
   position: any;
-  constructor(public modalController: ModalController, private routerOutlet: IonRouterOutlet) {
+  jobs: [];
+  offset:number;
+  limit:number;
+  loading:boolean =true;
+  constructor(public modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
+    private usersService: UsersService,
+    private globalService: GlobalService,
+  ) {
     this.position = window.pageYOffset;
+    this.jobs = [];
+    this.offset = 0;
+    this.limit = 20;
   }
 
   ngOnInit() {
+    this.getjobs(this.offset, this.limit);
   }
 
   async newJobModal() {
@@ -24,7 +38,7 @@ export class JobsPage implements OnInit {
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl
     });
-    modal.onDidDismiss().then(response=>{
+    modal.onDidDismiss().then(response => {
       console.log(response.data);
     })
     return await modal.present();
@@ -40,6 +54,38 @@ export class JobsPage implements OnInit {
     }
     this.position = scroll;
     // console.dir('red');
+  }
+
+  doRefresh(event) {
+    this.offset = 0;
+    this.limit = 20;
+    this.getjobs(this.offset, this.limit);
+    event.target.complete();
+  }
+
+  more(event) {
+    this.limit += 20;
+    this.getjobs(this.offset, this.limit);
+    event.target.complete();
+    if (this.jobs.length <= this.limit) {
+      event.target.disabled = true;
+    }
+  }
+
+  getjobs(offset, limit) {
+    if(this.jobs.length == 0) {
+      this.loading = true;
+    }
+    this.usersService.getUserJobs(offset, limit).subscribe(
+      (jobData) => {
+        this.jobs = jobData.data;
+        localStorage.setItem('jobs', JSON.stringify(this.jobs));
+        this.loading = false;
+      },
+      (error) => {
+
+      }
+    );
   }
 
 }
