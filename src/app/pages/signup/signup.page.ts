@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from "@angular/router";
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -13,9 +13,11 @@ import { NewUser } from 'src/app/classes/user';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  pictureURL: string = "/assets/food/pancakes.jpg";
+  @ViewChild('fileButton', { static: false }) fileButton;
+  pictureURL: any = "/assets/user.png";
   userAccount: NewUser;
   currencies: any;
+  imageURL: any ;
   constructor(
     private router: Router,
     private imagePicker: ImagePicker,
@@ -60,12 +62,28 @@ export class SignupPage implements OnInit {
     });
   }
 
+  uploadFile() {
+    this.fileButton.nativeElement.click();
+  }
+  fileChanged(event) {
+    this.userAccount.pictureUrl = event.target.files[0];
+    const files = event.target.files[0];
+    console.log(files);
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.pictureURL = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
   signup() {
     this.globalService.showLoader('Creating your account...');
     if (
       [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.pictureUrl, this.userAccount.password1, this.userAccount.password2].includes("") ||
       [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.pictureUrl, this.userAccount.password1, this.userAccount.password2].includes(null)
     ) {
+
+      console.log(this.pictureURL);
       let message = "Please fill all fields and try again.",
         duration = 3000,
         type = 'error';

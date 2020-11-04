@@ -53,6 +53,14 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
+.ionModal3 .modal-wrapper {
+    min-width: 100% !important;
+    position: absolute;
+    bottom: 0;
+    --height: 30vh !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
 .loader-class {
     --spinner-color: var(--ion-color-primarycolor);
 }

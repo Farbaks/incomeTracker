@@ -2,7 +2,7 @@
   <ion-toolbar class="toolbar1" id="header">
     <div class="buttons">
       <button class="cancel" (click)="this.closeModal()">Cancel</button>
-      <button class="create">Update Job</button>
+      <button class="create" (click)="this.changeStatus()">Update Job</button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -11,12 +11,12 @@
   <div class="container">
     <div class="input-div fullwidth">
       <p>Status:</p>
-      <select>
+      <select [(ngModel)] = "this.status">
         <option>Pending Quotation Approval</option>
         <option>Pending Job Completion</option>
         <option>Pending Payment</option>
         <option>Completed</option>
-        <option>Canceled</option>
+        <option>Cancelled</option>
       </select>
     </div>
   </div>

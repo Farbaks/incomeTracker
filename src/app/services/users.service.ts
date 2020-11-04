@@ -140,5 +140,24 @@ export class UsersService {
         catchError(this.handleError)
       );
   }
-
+  // Edit job
+  editJob(data:any) {
+    this.loadToken();
+    return this.http
+      .put<response>(this.domainKey + 'jobs', data, this.httpOptions2)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+  // Get one job
+  getOneJob(id:number) {
+    this.loadToken();
+    return this.http
+      .get<response>(this.domainKey + 'job/'+id, this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
 }

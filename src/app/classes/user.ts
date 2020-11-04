@@ -14,7 +14,7 @@ export class NewUser {
     companyName:string = "";
     companyAddress:string = "";
     currency:string;
-    pictureUrl:any = "";
+    pictureUrl:any;
     deviceId:string;
 }
 

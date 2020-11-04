@@ -22,43 +22,48 @@
           <img src="{{pictureURL}}" />
         </div>
         <div class="add-buttons">
-          <p class="add-discount" (click)="this.selectPicture()">Choose Picture</p>
+          <p class="add-discount" (click)="this.uploadFile()">Choose Picture</p>
         </div>
+        <input type="file" style="display: none !important;" (change)="fileChanged($event)" accept="image/*" class="filebtn"
+          #fileButton />
       </div>
       <div class="section">
         <div class="input-div">
           <p>Name:</p>
-          <input type="text" [(ngModel)] = "this.userAccount.name" />
+          <input type="text" [(ngModel)]="this.userAccount.name" />
         </div>
         <div class="input-div">
           <p>Email:</p>
-          <input type="email" [(ngModel)] = "this.userAccount.email" />
+          <input type="email" [(ngModel)]="this.userAccount.email" />
         </div>
         <div class="input-div">
           <p>Phone Number:</p>
-          <input type="text" [(ngModel)] = "this.userAccount.phoneNumber" />
+          <input type="text" [(ngModel)]="this.userAccount.phoneNumber" />
         </div>
         <div class="input-div">
           <p>Company Name:</p>
-          <input type="email" [(ngModel)] = "this.userAccount.companyName" />
+          <input type="email" [(ngModel)]="this.userAccount.companyName" />
         </div>
         <div class="input-div">
           <p>Company Address:</p>
-          <input type="text" [(ngModel)] = "this.userAccount.companyAddress" />
+          <input type="text" [(ngModel)]="this.userAccount.companyAddress" />
         </div>
         <div class="input-div">
           <p>Currency:</p>
-          <select [(ngModel)] = "this.userAccount.currency" (change)="log()" >
-            <option *ngFor = "let currency of currencies" value="{{currency.currencies[0].symbol || currency.currencies[0].code}}">{{currency.name}} - {{currency.currencies[0].code}} ({{currency.currencies[0].symbol || currency.currencies[0].code}})</option>
+          <select [(ngModel)]="this.userAccount.currency" (change)="log()">
+            <option *ngFor="let currency of currencies"
+              value="{{currency.currencies[0].symbol || currency.currencies[0].code}}">{{currency.name}} -
+              {{currency.currencies[0].code}} ({{currency.currencies[0].symbol || currency.currencies[0].code}})
+            </option>
           </select>
         </div>
         <div class="input-div">
           <p>Password:</p>
-          <input type="password" [(ngModel)] = "this.userAccount.password1" />
+          <input type="password" [(ngModel)]="this.userAccount.password1" />
         </div>
         <div class="input-div">
           <p>Re enter Password:</p>
-          <input type="password" [(ngModel)] = "this.userAccount.password2" />
+          <input type="password" [(ngModel)]="this.userAccount.password2" />
         </div>
       </div>
       <div class="add-buttons">

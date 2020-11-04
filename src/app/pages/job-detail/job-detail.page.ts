@@ -7,6 +7,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { UsersService } from 'src/app/services/users.service';
 import { EditJobPage } from '../edit-job/edit-job.page';
 import { ActionSheetController } from '@ionic/angular';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-job-detail',
@@ -14,9 +15,9 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./job-detail.page.scss'],
 })
 export class JobDetailPage implements OnInit {
-  id:any;
-  jobs:any;
-  jobItem:any;
+  id: any;
+  jobs: any;
+  jobItem: any;
   constructor(
     private pdfGenerator: PDFGenerator,
     private previewAnyFile: PreviewAnyFile,
@@ -26,16 +27,31 @@ export class JobDetailPage implements OnInit {
     public modalController: ModalController,
     public actionSheetController: ActionSheetController
   ) {
+    this.jobItem = {};
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
-    this.fetchDetails(this.id);
+    this.fetchDetails();
   }
 
   ngOnInit() {
   }
 
-  fetchDetails(id) {
+  fetchDetails() {
     this.jobs = JSON.parse(localStorage.getItem('jobs'));
-    this.jobItem = this.jobs.filter(n => n.id == id);
+    this.jobItem = this.jobs.filter(n => n.id == this.id)[0];
+    this.reloadDetails();
+  }
+
+  reloadDetails() {
+    this.usersService.getOneJob(this.id)
+      .subscribe(
+        (response) => {
+          this.jobItem = {};
+          this.jobItem = response.data;
+          console.log(this.jobItem);
+        },
+        (error) => { }
+      )
+
   }
 
   async moreOptions() {
@@ -65,11 +81,18 @@ export class JobDetailPage implements OnInit {
     const modal = await this.modalController.create({
       component: EditJobPage,
       mode: "ios",
-      cssClass: 'ionModal1',
+      cssClass: 'ionModal3',
       swipeToClose: true,
+      componentProps: {
+        'status': this.jobItem.status,
+        'jobId': this.jobItem.id,
+      }
       // presentingElement: this.routerOutlet.nativeEl,
     });
-    modal.onDidDismiss().then(response=>{
+    modal.onDidDismiss().then(response => {
+      if (response.data != undefined && response.data.message == "Updated successfully") {
+        this.reloadDetails();
+      }
     })
     return await modal.present();
   }
