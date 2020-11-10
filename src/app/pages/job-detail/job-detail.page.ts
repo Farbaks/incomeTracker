@@ -7,7 +7,6 @@ import { GlobalService } from 'src/app/services/global.service';
 import { UsersService } from 'src/app/services/users.service';
 import { EditJobPage } from '../edit-job/edit-job.page';
 import { ActionSheetController } from '@ionic/angular';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-job-detail',
@@ -29,10 +28,11 @@ export class JobDetailPage implements OnInit {
   ) {
     this.jobItem = {};
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
-    this.fetchDetails();
+    
   }
 
   ngOnInit() {
+    this.fetchDetails();
   }
 
   fetchDetails() {
@@ -42,12 +42,11 @@ export class JobDetailPage implements OnInit {
   }
 
   reloadDetails() {
+    let that = this;
     this.usersService.getOneJob(this.id)
       .subscribe(
         (response) => {
-          this.jobItem = {};
-          this.jobItem = response.data;
-          console.log(this.jobItem);
+          that.jobItem = response.data;
         },
         (error) => { }
       )
@@ -91,7 +90,8 @@ export class JobDetailPage implements OnInit {
     });
     modal.onDidDismiss().then(response => {
       if (response.data != undefined && response.data.message == "Updated successfully") {
-        this.reloadDetails();
+        // this.reloadDetails();
+        this.ngOnInit();
       }
     })
     return await modal.present();

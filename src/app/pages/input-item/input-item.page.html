@@ -2,7 +2,7 @@
   <ion-toolbar class="toolbar1" id="header">
     <div class="buttons">
       <button class="cancel" (click)="this.closeModal()">Cancel</button>
-      <button class="create">Add Item</button>
+      <ion-button disabled={{this.disabled}} class="create" (click)="addItem()">{{this.action}} Item</ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -11,22 +11,22 @@
   <div class="container">
     <div class="input-div fullwidth">
       <p>Item Name:</p>
-      <input type="text" />
+      <input type="text" [(ngModel)] = "this.item.itemName" (input) = "this.onType()"/>
     </div>
     <div class="fullwidth flex-row">
       <div class="input-div half-width">
         <p>UOM:</p>
-        <input type="number" />
+        <input type="text" [(ngModel)] = "this.item.UOM" (input) = "this.onType()" />
       </div>
       <div class="input-div half-width">
         <p>Quantity:</p>
-        <input type="text" />
+        <input type="number" [(ngModel)] = "this.item.quantity" (input) = "this.onType()" />
       </div>
     </div>
     
     <div class="input-div fullwidth">
       <p>Unit Price:</p>
-      <input type="number" />
+      <input type="number" [(ngModel)] = "this.item.unitPrice" (input) = "this.onType()" />
     </div>
     
   </div>

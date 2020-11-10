@@ -36,49 +36,25 @@
         <input type="date" />
       </div>
     </div>
-    <!-- <div class="section item-list">
-      <div class="item-item">
+    <div class="section item-list">
+      <div class="item-item" *ngFor="let item of Items">
         <div class="item-sec">
-          <p class="name">Root Beer</p>
-          <p class="price1">₦<span>400,000.00</span></p>
+          <p class="name">{{item.itemName}}</p>
+          <p class="price1">{{this.globalService.nairaFormat("N", this.item.totalPrice) || this.item.totalPrice}}</p>
         </div>
         <div class="item-sec">
-          <p><span class="quantity"><span>2</span> X </span><span class="price2">₦<span>200,000.00</span></span></p>
+          <p><span class="quantity"><span>{{this.item.quantity}}</span> X </span><span
+              class="price2">{{this.globalService.nairaFormat("N", this.item.unitPrice) || this.item.unitPrice}}</span>
+          </p>
           <div class="icon">
-            <ion-icon name="create-outline"></ion-icon>
-            <ion-icon name="trash-outline"></ion-icon>
+            <ion-icon name="create-outline" (click)="this.openEditItemModal(item)"></ion-icon>
+            <ion-icon name="trash-outline" (click)="this.removeItem(item)"></ion-icon>
           </div>
         </div>
       </div>
-      <div class="item-item">
-        <div class="item-sec">
-          <p class="name">Ginger Beer</p>
-          <p class="price1">₦<span>100,000.00</span></p>
-        </div>
-        <div class="item-sec">
-          <p><span class="quantity"><span>25</span> X </span><span class="price2">₦<span>4,000.00</span></span></p>
-          <div class="icon">
-            <ion-icon name="create-outline"></ion-icon>
-            <ion-icon name="trash-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-      <div class="item-item">
-        <div class="item-sec">
-          <p class="name">Monster Energy Drink</p>
-          <p class="price1">₦<span>400,000.00</span></p>
-        </div>
-        <div class="item-sec">
-          <p><span class="quantity"><span>800</span> X </span><span class="price2">₦<span>500.00</span></span></p>
-          <div class="icon">
-            <ion-icon name="create-outline"></ion-icon>
-            <ion-icon name="trash-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-    </div> -->
+    </div>
     <div class="section">
-      <p class="add-item" (click) ="this.addItem()">+ Add Item</p>
+      <p class="add-item" (click)="this.openAddItemModal()">+ Add Item</p>
     </div>
     <div class="section">
       <div class="input-div">
@@ -93,39 +69,29 @@
       </div>
     </div>
     <div class="add-buttons">
-      <p class="add-tax" (click)="this.addPayment('Tax')">Add Tax</p>
-      <p class="add-discount" (click)="this.addPayment('Discount')">Add Discount</p>
+      <p class="add-tax" (click)="this.openAddPaymentModal('tax')">Add Tax</p>
+      <p class="add-discount" (click)="this.openAddPaymentModal('discount')">Add Discount</p>
     </div>
-    <!-- <ion-list>
-      <ion-item-sliding>
+    <ion-list>
+      <ion-item-sliding *ngFor="let payment of Payments">
         <ion-item-options side="start">
-          <ion-item-option (click)="primary">Edit</ion-item-option>
+          <ion-item-option color="primary" (click)="this.openEditPaymentModal(payment)">Edit</ion-item-option>
         </ion-item-options>
         <ion-item lines="none" mode="ios">
           <div class="section2">
-            <p class="name">Discount:</p>
-            <p class="price1"><span>- </span> ₦<span>4,000.00</span></p>
+            <p class="name">{{payment.paymentName}}:</p>
+            <p class="price1">
+              <span *ngIf="payment.paymentType=='discount'">-</span>
+              <span *ngIf="payment.paymentType=='tax'">+</span>
+              {{this.globalService.nairaFormat("N", this.payment.amount) || this.payment.amount}}
+            </p>
           </div>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger">Delete</ion-item-option>
+          <ion-item-option color="danger" (click)="this.removePayment(payment)">Delete</ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
-      <ion-item-sliding>
-        <ion-item-options side="start">
-          <ion-item-option (click)="primary">Edit</ion-item-option>
-        </ion-item-options>
-        <ion-item lines="none" mode="ios">
-          <div class="section2">
-            <p class="name">Tax:</p>
-            <p class="price1"><span>+</span> (<span>7</span>%) ₦<span>4,000.00</span></p>
-          </div>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger">Delete</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list> -->
+    </ion-list>
     <div class="summary">
       <div class="section">
         <p class="name">Total</p>

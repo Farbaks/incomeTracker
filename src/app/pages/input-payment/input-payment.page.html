@@ -2,7 +2,7 @@
   <ion-toolbar class="toolbar1" id="header">
     <div class="buttons">
       <button class="cancel" (click)="this.closeModal()">Cancel</button>
-      <button class="create">Add {{this.type}}</button>
+      <ion-button disabled={{this.disabled}} class="create" (click)="addPayment()">{{this.action}} {{this.type}}</ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -10,12 +10,12 @@
 <ion-content>
   <div class="container">
     <div class="input-div fullwidth">
-      <p>{{this.type}} Name:</p>
-      <input type="text" />
+      <p>{{this.type}} name:</p>
+      <input type="text" [(ngModel)] = "this.payment.paymentName" (input) = "this.onType()" />
     </div>
     <div class="input-div fullwidth">
-      <p>Amount:</p>
-      <input type="number" />
+      <p>amount:</p>
+      <input type="number" [(ngModel)] = "this.payment.amount" (input) = "this.onType()" />
     </div>
   </div>
 </ion-content>

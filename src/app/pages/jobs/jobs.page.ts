@@ -27,6 +27,9 @@ export class JobsPage implements OnInit {
   }
 
   ngOnInit() {
+    // this.getjobs(this.offset, this.limit);
+  }
+  ionViewDidEnter() {
     this.getjobs(this.offset, this.limit);
   }
 

@@ -31,12 +31,13 @@ ion-toolbar {
         justify-content: space-between;
     }
 
-    .create {
-        padding: 10px 15px;
-        font-size: .8em;
-        background-color: var(--ion-color-primarycolor);
-        color: white;
-        border-radius: 15px;
+    ion-button, .create {
+        padding: 10px 15px !important;
+        font-size: .8em !important;
+        --background: var(--ion-color-primarycolor) !important;
+        background-color: var(--ion-color-primarycolor) !important;
+        color: white !important;
+        border-radius: 15px !important;
     }
 
     .cancel {
@@ -78,6 +79,7 @@ ion-toolbar {
             padding: 15px;
             border-radius: 10px;
             border: solid 1px rgb(230, 230, 230);
+            font-size: .9em;
         }
 
         textarea {

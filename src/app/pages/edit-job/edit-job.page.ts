@@ -44,7 +44,15 @@ export class EditJobPage implements OnInit {
           if (data.message == "Job has been updated successfully") {
             this.globalService.showToast(data.message, 2000, "success");
             this.globalService.dismissLoader();
-            this.closeModal('Updated successfully');
+            this.usersService.getUserJobs(0, 20).subscribe(
+              (jobData) => {
+                localStorage.setItem('jobs', JSON.stringify(jobData.data));
+                this.closeModal('Updated successfully');
+              },
+              (error) => {
+
+              }
+            );
           }
           else {
             this.globalService.showToast("An error occured. Please try again later.", 2000, "error");
