@@ -25,6 +25,7 @@ export class InputQuotationPage implements OnInit {
     this.quote = new Quotation;
     this.Items = [];
     this.Payments = [];
+    this.calculateTotal();
   }
 
   ngOnInit() {
@@ -61,12 +62,17 @@ export class InputQuotationPage implements OnInit {
   }
 
   openAddPaymentModal(type) {
-    let payment = {
-      paymentName: "",
-      paymentType: type,
-      amount:0
-    };
-    this.addPayment("Add", type, payment);
+    if(this.quote.subTotalJobCost > 0) {
+      let payment = {
+        paymentName: "",
+        paymentType: type,
+        amount:0
+      };
+      this.addPayment("Add", type, payment);
+    }
+    else {
+      this.globalService.showToast(`You have to add an item before adding ${type}`, 2000, 'error', 'top');
+    }
   }
 
   openEditPaymentModal(payment) {
@@ -92,7 +98,6 @@ export class InputQuotationPage implements OnInit {
       // presentingElement: this.routerOutlet.nativeEl,
     });
     modal.onDidDismiss().then(response=>{
-      console.log(response.data);
       if (response.data != undefined && response.data.message == "Updated successfully") {
         this.Items.forEach(element => {
           if(element.SN == response.data.body.SN) {
@@ -109,7 +114,7 @@ export class InputQuotationPage implements OnInit {
         newItem.SN = this.Items.length;
         this.Items.push(newItem);
       }
-      
+      this.calculateTotal();
     })
     return await modal.present();
   }
@@ -128,7 +133,6 @@ export class InputQuotationPage implements OnInit {
       // presentingElement: this.routerOutlet.nativeEl
     });
     modal.onDidDismiss().then(response=>{
-      console.log(response.data);
       if (response.data != undefined && response.data.message == "Updated successfully") {
         this.Payments.forEach(element => {
           if(element.SN == response.data.body.SN) {
@@ -143,9 +147,25 @@ export class InputQuotationPage implements OnInit {
         newPayment.SN = this.Payments.length;
         this.Payments.push(newPayment);
       }
+      this.calculateTotal();
     })
     return await modal.present();
   }
 
+  calculateTotal() {
+    this.quote.subTotalJobCost = 0;
+    this.Items.forEach(element => {
+      this.quote.subTotalJobCost += element.totalPrice;
+    });
+    this.quote.totalJobCost = this.quote.subTotalJobCost;
+    this.Payments.forEach(element => {
+      if(element.paymentType == 'tax'){
+        this.quote.totalJobCost += element.amount;
+      }
+      else if(element.paymentType == 'discount') {
+        this.quote.totalJobCost -= element.amount;
+      }
+    });
+  }
 
 }

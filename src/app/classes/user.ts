@@ -42,16 +42,16 @@ export class NewJob {
 }
 
 export class Quotation {
-    salesPerson: string;
-    quotationValidity: number;
-    paymentTerms: string;
-    refNumber: number;
+    salesPerson: string = "Farouk Bakre";
+    quotationValidity: number = 30;
+    paymentTerms: string = "None";
+    refNumber: number = 12235445;
     deliveryDate: string;
     currency: string;
     subTotalJobCost: number;
     totalJobCost: number;
     profit: number;
-    comment: string;
+    comment: string= "Red";
     jobId: number;
     items: Item[];
     payments: Payment[];

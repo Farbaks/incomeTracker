@@ -17,34 +17,34 @@
     <div class="section">
       <div class="input-div">
         <p>Sales Person:</p>
-        <input type="text" />
+        <input type="text" [(ngModel)]="this.quote.salesPerson"/>
       </div>
       <div class="input-div">
         <p>Quotation Validity(No of days):</p>
-        <input type="number" />
+        <input type="number" [(ngModel)]="this.quote.quotationValidity" />
       </div>
       <div class="input-div">
         <p>Payment Terms:</p>
-        <input type="text" />
+        <input type="text" [(ngModel)]="this.quote.paymentTerms" />
       </div>
       <div class="input-div">
         <p>Reference Number:</p>
-        <input type="number" />
+        <input type="number" [(ngModel)]="this.quote.refNumber" />
       </div>
       <div class="input-div">
         <p>Delivery Date:</p>
-        <input type="date" />
+        <input type="date" [(ngModel)]="this.quote.deliveryDate" />
       </div>
     </div>
     <div class="section item-list">
       <div class="item-item" *ngFor="let item of Items">
         <div class="item-sec">
           <p class="name">{{item.itemName}}</p>
-          <p class="price1">{{this.globalService.nairaFormat("N", this.item.totalPrice) || this.item.totalPrice}}</p>
+          <p class="price1">{{this.globalService.nairaFormat("₦", this.item.totalPrice) || this.item.totalPrice}}</p>
         </div>
         <div class="item-sec">
           <p><span class="quantity"><span>{{this.item.quantity}}</span> X </span><span
-              class="price2">{{this.globalService.nairaFormat("N", this.item.unitPrice) || this.item.unitPrice}}</span>
+              class="price2">{{this.globalService.nairaFormat("₦", this.item.unitPrice) || this.item.unitPrice}}</span>
           </p>
           <div class="icon">
             <ion-icon name="create-outline" (click)="this.openEditItemModal(item)"></ion-icon>
@@ -59,13 +59,13 @@
     <div class="section">
       <div class="input-div">
         <p>Note/Comment:</p>
-        <textarea rows="3"></textarea>
+        <textarea rows="3" [(ngModel)]="this.quote.comment"></textarea>
       </div>
     </div>
     <div class="summary">
       <div class="section">
         <p class="name">Subtotal:</p>
-        <p class="price1">₦<span>400,000.00</span></p>
+        <p class="price1">{{this.globalService.nairaFormat("₦", this.quote.subTotalJobCost) || this.quote.subTotalJobCost}}</p>
       </div>
     </div>
     <div class="add-buttons">
@@ -81,9 +81,9 @@
           <div class="section2">
             <p class="name">{{payment.paymentName}}:</p>
             <p class="price1">
-              <span *ngIf="payment.paymentType=='discount'">-</span>
-              <span *ngIf="payment.paymentType=='tax'">+</span>
-              {{this.globalService.nairaFormat("N", this.payment.amount) || this.payment.amount}}
+              <span *ngIf="payment.paymentType=='discount'">- </span>
+              <span *ngIf="payment.paymentType=='tax'">+ </span>
+              {{this.globalService.nairaFormat("₦", this.payment.amount) || this.payment.amount}}
             </p>
           </div>
         </ion-item>
@@ -95,7 +95,7 @@
     <div class="summary">
       <div class="section">
         <p class="name">Total</p>
-        <p class="price1">₦<span>450,000.00</span></p>
+        <p class="price1">{{this.globalService.nairaFormat("₦", this.quote.totalJobCost) || this.quote.totalJobCost}}</p>
       </div>
     </div>
     <div class="add-buttons">
