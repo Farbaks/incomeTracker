@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from '../../services/auth-guard.service';
 
 import { TabsPage } from './tabs.page';
 
@@ -7,6 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'dashboard',
@@ -14,30 +16,6 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () => import('src/app/pages/dashboard/dashboard.module').then(m => m.DashboardPageModule),
-          },
-          {
-            path: 'jobs',
-            children: [
-              {
-                path: '',
-                loadChildren: () => import('src/app/pages/jobs/jobs.module').then(m => m.JobsPageModule),
-              },
-              {
-                path: ':id',
-                loadChildren: () => import('src/app/pages/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
-                children: [
-                  {
-                    path: '',
-                    loadChildren: () => import('src/app/pages/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
-                  },
-                  {
-                    path: 'quote',
-                    loadChildren: () => import('src/app/pages/input-quotation/input-quotation.module').then(m => m.InputQuotationPageModule),
-
-                  }
-                ]
-              }
-            ]
           },
         ]
       },
@@ -57,7 +35,7 @@ const routes: Routes = [
                 loadChildren: () => import('src/app/pages/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
               },
               {
-                path: 'quote',
+                path: 'quote/:type',
                 loadChildren: () => import('src/app/pages/input-quotation/input-quotation.module').then(m => m.InputQuotationPageModule),
 
               }

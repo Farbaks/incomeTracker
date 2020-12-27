@@ -10,8 +10,16 @@
 <ion-content>
   <div class="container">
     <div class="input-div">
+      <p>Job Name:</p>
+      <input type="text" [(ngModel)]="this.data.jobName" />
+    </div>
+    <div class="input-div">
       <p>Company Name:</p>
       <input type="text" [(ngModel)]="this.data.companyName" />
+    </div>
+    <div class="input-div">
+      <p>Company Address:</p>
+      <input type="text" [(ngModel)]="this.data.companyAddress" />
     </div>
     <div class="input-div">
       <p>Contact Name:</p>

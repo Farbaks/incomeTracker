@@ -15,7 +15,7 @@
     <div class="job-list" *ngIf="this.loading == false && this.jobs.length != 0">
       <div class="job-item" *ngFor="let job of jobs" [routerLink] = "[job.id]">
         <div class="job-con">
-          <p class="heading1">{{job.companyName}}</p>
+          <p class="heading1">{{job.jobName}}</p>
           <p *ngIf="job.status == 'Completed'" class="status bggreen">{{job.status}}</p>
           <p *ngIf="job.status != 'Completed' && job.status != 'Cancelled'" class="status bgorange">{{job.status}}</p>
           <p *ngIf="job.status == 'Cancelled'" class="status bgred">{{job.status}}</p>
@@ -23,10 +23,10 @@
         <div class="job-con2">
           <div class="job-con3">
             <p *ngIf="job.quotation != 'Quotation has not been created'" class="heading1">
-              {{this.globalService.nairaFormat(job.quotation.currency, job.quotation.totalJobCost)}}
+              {{this.globalService.nairaFormat(job.currency, job.quotation.quotationDetails.profit)}}
             </p>
             <p *ngIf="job.quotation == 'Quotation has not been created'" class="heading1">
-              00.00
+              {{this.globalService.nairaFormat(job.currency, 0)}}
             </p>
             <p class="date">{{this.globalService.formatDate(job.created_at)}}</p>
           </div>

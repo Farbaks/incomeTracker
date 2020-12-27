@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UpdatePassword } from 'src/app/classes/user';
+import { GlobalService } from 'src/app/services/global.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-privacy',
@@ -8,8 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class PrivacyPage implements OnInit {
 
   position: any;
-
-  constructor() { }
+  data: UpdatePassword;
+  constructor(
+    private usersService: UsersService,
+    private globalService: GlobalService,
+  ) {
+    this.data = new UpdatePassword;
+  }
 
   ngOnInit() {
   }
@@ -23,6 +31,36 @@ export class PrivacyPage implements OnInit {
       document.getElementById('header').style.borderBottom = "none";
     }
     this.position = scroll;
+  }
+
+  updatePassword() {
+    this.globalService.showLoader('Updating your password');
+    if ([this.data.oldPassword, this.data.newPassword, this.data.newPassword2].includes("")) {
+      let message = "Please fill all fields and try again.",
+        duration = 3000,
+        type = 'error';
+      this.globalService.dismissLoader();
+      this.globalService.showToast(message, duration, type);
+    }
+    else if (this.data.newPassword != this.data.newPassword2) {
+      let message = "Your passwords don't match",
+        duration = 3000,
+        type = 'error';
+      this.globalService.dismissLoader();
+      this.globalService.showToast(message, duration, type);
+    }
+    else {
+      this.usersService.updatePassword(this.data).subscribe(
+        (data) => {
+          this.globalService.showToast(data.message, 2000, "success");
+          this.globalService.dismissLoader();
+        },
+        (error) => {
+          this.globalService.showToast(error.message, 2000, "error");
+          this.globalService.dismissLoader();
+        }
+      );
+    }
   }
 
 }

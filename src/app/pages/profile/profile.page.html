@@ -15,12 +15,14 @@
   <div class="container">
     <div class="image-section">
       <div class="image-container">
-        <img src="{{pictureURL}}" />
+        <img src="{{pictureUrl}}" />
       </div>
       <div class="add-buttons">
-        <!-- <p class="add-tax">Remove Picture</p> -->
-        <p class="add-discount" (click)="this.selectPicture()">Choose Picture</p>
+        <p class="add-tax" (click)="this.removePicture()">Remove Logo</p>
+        <p class="add-discount" (click)="this.uploadFile()">Choose Logo</p>
       </div>
+      <input type="file" style="display: none !important;" (change)="fileChanged($event)" accept="image/*" class="filebtn"
+          #fileButton />
     </div>
     <div class="section">
       <div class="input-div">

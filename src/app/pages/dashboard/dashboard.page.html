@@ -39,22 +39,30 @@
       <p class="container-heading2">Recent Jobs</p>
       <p class="see-more" [routerLink]="['/tabs/jobs']">See All</p>
     </div>
-    <div class="recent-job-list">
-      <div class="job-item" *ngFor="let job of jobs" [routerLink]="['jobs/'+job.id]">
+    <div class="recent-job-list" *ngIf="this.jobs.length > 0">
+      <div class="job-item" *ngFor="let job of jobs" [routerLink]="['/tabs/jobs/'+job.id]">
         <div class="job-con">
-          <p class="heading1">{{job.companyName}}</p>
-          <p class="status bggreen">{{job.status}}</p>
+          <p class="heading1">{{job.jobName}}</p>
+          <p *ngIf="job.status == 'Completed'" class="status bggreen">{{job.status}}</p>
+          <p *ngIf="job.status != 'Completed' && job.status != 'Cancelled'" class="status bgorange">{{job.status}}</p>
+          <p *ngIf="job.status == 'Cancelled'" class="status bgred">{{job.status}}</p>
         </div>
         <div class="job-con2">
           <div class="job-con3">
-            <p class="heading1">
-              {{this.globalService.nairaFormat(job.quotation.quotationDetails.currency, job.quotation.quotationDetails.profit)}}
+            <p class="heading1" *ngIf="job.quotation == 'Quotation has not been created'">
+              {{this.globalService.nairaFormat(job.currency, 0)}}
             </p>
-            <p class="date">{{this.globalService.changeDate(job.created_at)}}</p>
+            <p class="heading1" *ngIf="job.quotation != 'Quotation has not been created'">
+              {{this.globalService.nairaFormat(job.currency, job.quotation.quotationDetails.profit)}}
+            </p>
+            <p class="date">{{this.globalService.formatDate(job.created_at)}}</p>
           </div>
           <ion-icon name="chevron-forward"></ion-icon>
         </div>
       </div>
+    </div>
+    <div class="message" *ngIf="this.jobs.length == 0">
+      <p>You don't have any job yet.</p>
     </div>
   </div>
 </ion-content>

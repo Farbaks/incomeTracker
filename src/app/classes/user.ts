@@ -34,27 +34,46 @@ export class UpdateUser {
     pictureUrl: any;
 }
 
+export class UpdatePassword {
+    oldPassword: string;
+    newPassword: string;
+    newPassword2: string;
+}
+
 export class NewJob {
+    id?:number;
+    jobName: string = "";
     companyName: string = "";
+    companyAddress: string = "";
     contactName: string = "";
     contactNumber: string = "";
     comment: string = "";
 }
 
 export class Quotation {
-    salesPerson: string = "Farouk Bakre";
-    quotationValidity: number = 30;
-    paymentTerms: string = "None";
-    refNumber: number = 12235445;
+    salesPerson: string;
+    quotationValidity: number;
+    paymentTerms: string;
+    refNumber: number;
     deliveryDate: string;
     currency: string;
     subTotalJobCost: number;
     totalJobCost: number;
     profit: number;
-    comment: string= "Red";
+    comment: string;
     jobId: number;
     items: Item[];
     payments: Payment[];
+
+    constructor(jobId:number) {
+        this.salesPerson = "";
+        this.quotationValidity = 0;
+        this.paymentTerms = "";
+        this.profit = 0;
+        this.jobId = jobId;
+        this.items = [];
+        this.payments = [];
+    }
 }
 
 export class Item {

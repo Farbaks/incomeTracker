@@ -37,7 +37,7 @@ export class NewJobPage implements OnInit {
 
   createJob() {
     this.globalService.showLoader('Creating Job...');
-    if ([this.data.companyName, this.data.contactName, this.data.contactNumber].includes("")) {
+    if ([this.data.jobName, this.data.companyName, this.data.companyAddress, this.data.contactName, this.data.contactNumber].includes("")) {
       let message = "Please fill all fields and try again.",
         duration = 3000,
         type = 'error';
@@ -55,26 +55,14 @@ export class NewJobPage implements OnInit {
             if (data.message == "Job has been created successfully") {
               this.globalService.showToast(data.message, 2000, "success");
               this.globalService.dismissLoader();
-              localStorage.setItem('token', data.apiToken);
               setTimeout(() => {
                 this.closeModal();
-                this.router.navigate([data.data.id])
-              }, 2000);
+              }, 1000);
             }
           },
           (error) => {
-            if (error.message == "Email account does not exist") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else if (error.message == "Email or password incorrect") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else {
-              this.globalService.showToast("An error occured. Please try again later", 2000, "error");
-              this.globalService.dismissLoader();
-            }
+            this.globalService.showToast("An error occured. Please try again later", 2000, "error");
+            this.globalService.dismissLoader();
           })
     }
   }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
+import { UpdateUser } from 'src/app/classes/user';
 import { GlobalService } from 'src/app/services/global.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -9,14 +11,17 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  @ViewChild('fileButton', { static: false }) fileButton;
   position: any;
-  pictureURL: string = "/assets/food/pancakes.jpg";
-  userAccount: any ={};
+  pictureUrl: any;
+  userAccount: UpdateUser;
   constructor(
-    private imagePicker: ImagePicker,
     private usersService: UsersService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private router: Router,
+    private camera: Camera
   ) {
+    this.userAccount = new UpdateUser;
   }
 
   ngOnInit() {
@@ -34,23 +39,91 @@ export class ProfilePage implements OnInit {
     this.position = scroll;
   }
 
-  selectPicture() {
-    let options = {
-      maximumImagesCount: 1,
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      this.pictureURL = results[0];
+
+  fetchUserDetails() {
+    this.usersService.getUserInfo().subscribe(
+      (userData) => {
+        this.userAccount = userData.data;
+        this.pictureUrl = this.userAccount.pictureUrl || "/assets/user.png";
+      },
+      (error) => {
+        if (error.message == "No token sent in request" || error.message == "Invalid token" || error.message == "Not authorized to carry out this action") {
+          this.router.navigate(['/signin'], { replaceUrl: true })
+        }
+        else {
+          this.router.navigate(['/signin'], { replaceUrl: true })
+        }
+      }
+    );
+  }
+
+  choosePicture() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+      allowEdit: true
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.pictureUrl = base64Image;
+      this.updatePicture(base64Image)
+      // imageData is either a base64 encoded string or a file URI
     }, (err) => {
-      alert(err);
+      // Handle error
     });
   }
 
-  fetchUserDetails() {
+  uploadFile() {
+    this.fileButton.nativeElement.click();
+  }
+  fileChanged(event) {
+    this.userAccount.pictureUrl = event.target.files[0];
+    const files = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.pictureUrl = reader.result;
+      this.updatePicture(this.pictureUrl);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  updatePicture(picture) {
+    this.globalService.showLoader('Updating logo...');
+    this.usersService.updatePicture(JSON.stringify({logo: picture})).subscribe(
+      (data) => {
+        this.globalService.showToast(data.message, 2000, "success");
+          this.globalService.dismissLoader();
+          this.fetchUserDetails();
+      },
+      (error) => {
+        this.globalService.showToast(error.message, 2000, "error");
+        this.globalService.dismissLoader();
+      }
+    );
+  }
+
+  removePicture() {
+    this.globalService.showLoader('Removing logo...');
+    this.usersService.removePicture().subscribe(
+      (data) => {
+        this.globalService.showToast(data.message, 2000, "success");
+          this.globalService.dismissLoader();
+          this.fetchUserDetails();
+      },
+      (error) => {
+        this.globalService.showToast(error.message, 2000, "error");
+        this.globalService.dismissLoader();
+      }
+    );
   }
 
   updateUser() {
-    this.globalService.showLoader('Updating your account');
-    if ([this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.pictureURL].includes("") || [this.userAccount.name, this.userAccount.email, this.userAccount.phone, this.userAccount.companyName, this.userAccount.companyAddress, this.pictureURL].includes(null)) {
+    this.globalService.showLoader('Updating your account...');
+    if ([this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress].includes("") || [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress].includes(null)) {
       let message = "Please fill all fields and try again.",
         duration = 3000,
         type = 'error';
@@ -58,14 +131,18 @@ export class ProfilePage implements OnInit {
       this.globalService.showToast(message, duration, type);
     }
     else {
-      let user = {
-        name: this.userAccount.name,
-        email: this.userAccount.email,
-        phoneNumber: this.userAccount.phoneNumber,
-        companyName: this.userAccount.companyName,
-        companyAddress: this.userAccount.companyAddress,
-        pictureUrl: this.pictureURL || "/src/assets/food/shawarma1.jpg"
-      }
+      this.usersService.updateUser(this.userAccount).subscribe(
+        (data) => {
+          if (data.message == "User account has been updated") {
+            this.globalService.showToast(data.message, 2000, "success");
+            this.globalService.dismissLoader();
+          }
+        },
+        (error) => {
+          this.globalService.showToast(error.message, 2000, "error");
+          this.globalService.dismissLoader();
+        }
+      );
     }
   }
 

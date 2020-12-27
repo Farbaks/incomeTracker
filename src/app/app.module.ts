@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -35,7 +34,6 @@ import { AppRoutingModule } from './app-routing.module';
     StatusBar,
     SplashScreen,
     Camera,
-    ImagePicker,
     PreviewAnyFile,
     PDFGenerator,
     NativeStorage,

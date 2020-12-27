@@ -38,7 +38,6 @@ export class ForgotpasswordPage implements OnInit {
       // send reset mail
       this.usersService.forgotpassword(this.userAccount).subscribe(
         (data) => {
-          console.log(data.status);
           if (data.message == "Password reset mail has been sent") {
             this.globalService.showToast(data.message, 2000, "success");
             this.globalService.dismissLoader();

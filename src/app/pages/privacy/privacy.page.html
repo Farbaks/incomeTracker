@@ -16,19 +16,19 @@
     <div class="section">
       <div class="input-div">
         <p>Old Password:</p>
-        <input type="text" />
+        <input type="password" [(ngModel)] = "this.data.oldPassword" />
       </div>
       <div class="input-div">
         <p>New Password:</p>
-        <input type="email" />
+        <input type="password" [(ngModel)] = "this.data.newPassword" />
       </div>
       <div class="input-div">
         <p>Re enter Password:</p>
-        <input type="text" />
+        <input type="password" [(ngModel)] = "this.data.newPassword2" />
       </div>
     </div>
     <div class="add-buttons">
-      <p class="add-quotation">Save</p>
+      <p class="add-quotation" (click)="this.updatePassword()">Save</p>
     </div>
   </div>
 </ion-content>

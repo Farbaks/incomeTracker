@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
-import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
-import { ModalController } from '@ionic/angular';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { UsersService } from 'src/app/services/users.service';
 import { EditJobPage } from '../edit-job/edit-job.page';
@@ -18,21 +17,25 @@ export class JobDetailPage implements OnInit {
   jobs: any;
   jobItem: any;
   constructor(
+    private routerOutlet: IonRouterOutlet,
     private pdfGenerator: PDFGenerator,
-    private previewAnyFile: PreviewAnyFile,
     private route: ActivatedRoute,
     private usersService: UsersService,
     private globalService: GlobalService,
     public modalController: ModalController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    
   ) {
     this.jobItem = {};
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
-    
+
   }
 
   ngOnInit() {
     this.fetchDetails();
+  }
+  ionViewDidEnter() {
+    this.ngOnInit();
   }
 
   fetchDetails() {
@@ -54,13 +57,10 @@ export class JobDetailPage implements OnInit {
   }
 
   async moreOptions() {
-    const actionSheet = await this.actionSheetController.create({
-      // header: 'Albums',
-      cssClass: 'my-custom-class',
-      buttons: [{
+    let buttons;
+    if (this.jobItem.quotation == 'Quotation has not been created') {
+      buttons = [{
         text: 'Edit job status',
-        // role: 'destructive',
-        // icon: 'trash',
         handler: () => {
           this.editStatus();
         }
@@ -68,12 +68,57 @@ export class JobDetailPage implements OnInit {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
+      }];
+    }
+    else {
+      buttons = [{
+        text: 'View Quotation',
         handler: () => {
-          // console.log('Cancel clicked');
+          this.viewPDF('quotation');
         }
-      }]
+      }, {
+        text: 'View Invoice',
+        handler: () => {
+          this.viewPDF('invoice');
+        }
+      }, {
+        text: 'Edit job status',
+        handler: () => {
+          this.editStatus();
+        }
+      },
+      {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+      }];
+    }
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'action-sheet1',
+      buttons: buttons
     });
     await actionSheet.present();
+  }
+
+  async editJob() {
+    const modal = await this.modalController.create({
+      component: EditJobPage,
+      mode: "ios",
+      cssClass: 'ionModal',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        'job': this.jobItem,
+        'type':'job'
+      } 
+    });
+    modal.onDidDismiss().then(response => {
+      if (response.data != undefined && response.data.message == "Updated successfully") {
+        // this.reloadDetails();
+        this.ngOnInit();
+      }
+    })
+    return await modal.present();
   }
 
   async editStatus() {
@@ -83,8 +128,8 @@ export class JobDetailPage implements OnInit {
       cssClass: 'ionModal3',
       swipeToClose: true,
       componentProps: {
-        'status': this.jobItem.status,
-        'jobId': this.jobItem.id,
+        'job': this.jobItem,
+        'type':'status'
       }
       // presentingElement: this.routerOutlet.nativeEl,
     });
@@ -97,19 +142,22 @@ export class JobDetailPage implements OnInit {
     return await modal.present();
   }
 
-  viewPDF() {
+  viewPDF(type) {
+    let url;
     let options = {
       documentSize: 'A4',
       type: 'share',
       fileName: 'Quotation.pdf'
     }
-
-    this.pdfGenerator.fromURL('https://github.com/farbaks', options)
+    if (type == 'quotation') {
+      url = this.usersService.domainKey + 'job/' + this.id + '/quotation';
+    }
+    else {
+      url = this.usersService.domainKey + 'job/' + this.id + '/invoice';
+    }
+    this.pdfGenerator.fromURL(url, options)
       .then(() => 'ok')
       .catch((err) => console.log(err))
-    // this.previewAnyFile.preview('http://127.0.0.1:8000/quotation')
-    //   .then((res: any) => console.log(res))
-    //   .catch((error: any) => console.error(error));
   }
 
 }

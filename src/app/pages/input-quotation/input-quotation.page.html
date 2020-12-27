@@ -5,7 +5,8 @@
         <ion-back-button defaultHref="/tabs/jobs" icon="arrow-back" text=""></ion-back-button>
       </ion-buttons>
       <div>
-        <p class="profile-heading">Create Quotation</p>
+        <p class="profile-heading" *ngIf="this.type == 'new'">Create Quotation</p>
+        <p class="profile-heading" *ngIf="this.type == 'edit'">Edit Quotation</p>
       </div>
     </div>
 
@@ -16,24 +17,28 @@
   <div class="container">
     <div class="section">
       <div class="input-div">
-        <p>Sales Person:</p>
+        <p>Sales Person<span style="color: red;">*</span>:</p>
         <input type="text" [(ngModel)]="this.quote.salesPerson"/>
       </div>
       <div class="input-div">
-        <p>Quotation Validity(No of days):</p>
+        <p>Quotation Validity(No of days)<span style="color: red;">*</span>:</p>
         <input type="number" [(ngModel)]="this.quote.quotationValidity" />
       </div>
       <div class="input-div">
-        <p>Payment Terms:</p>
+        <p>Payment Terms<span style="color: red;">*</span>:</p>
         <input type="text" [(ngModel)]="this.quote.paymentTerms" />
       </div>
       <div class="input-div">
-        <p>Reference Number:</p>
+        <p>Reference Number(optional):</p>
         <input type="number" [(ngModel)]="this.quote.refNumber" />
       </div>
       <div class="input-div">
-        <p>Delivery Date:</p>
+        <p>Delivery Date(optional):</p>
         <input type="date" [(ngModel)]="this.quote.deliveryDate" />
+      </div>
+      <div class="input-div">
+        <p>Profit<span style="color: red;">*</span>:</p>
+        <input type="number" [(ngModel)]="this.quote.profit" />
       </div>
     </div>
     <div class="section item-list">
@@ -58,7 +63,7 @@
     </div>
     <div class="section">
       <div class="input-div">
-        <p>Note/Comment:</p>
+        <p>Note/Comment(Optional):</p>
         <textarea rows="3" [(ngModel)]="this.quote.comment"></textarea>
       </div>
     </div>
@@ -99,7 +104,8 @@
       </div>
     </div>
     <div class="add-buttons">
-      <p class="add-quotation">Create Quotatation</p>
+      <p class="add-quotation" *ngIf="this.type == 'new'" (click)="this.submit('new')">Create Quotation</p>
+      <p class="add-quotation" *ngIf="this.type == 'edit'" (click)="this.submit('edit')">Update Quotation</p>
     </div>
   </div>
 </ion-content>

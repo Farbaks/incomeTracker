@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { NewUser, User, response, NewJob } from 'src/app/classes/user';
+import { NewUser, User, response, NewJob, Quotation, UpdateUser, UpdatePassword } from 'src/app/classes/user';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
@@ -11,11 +11,12 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
   providedIn: 'root'
 })
 export class UsersService {
-  domainKey = 'https://gentle-ravine-26248.herokuapp.com/api/';
-  httpOptions2: { headers: HttpHeaders; responseType?: 'json'; };
+  // domainKey = 'https://income-live.herokuapp.com/api/';
+  domainKey = 'https://income-qa.herokuapp.com/api/';
   // domainKey = 'http://127.0.0.1:8000/api/';
+  httpOptions2: { headers: HttpHeaders; responseType?: 'json'; };
   constructor(private http: HttpClient, private nativeStorage: NativeStorage,private uniqueDeviceID: UniqueDeviceID,) {
-    
+
   }
   loadToken() {
     try {
@@ -28,6 +29,7 @@ export class UsersService {
       };
     }
     catch(error) {
+      console.log(error);
       this.httpOptions2 = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -50,7 +52,7 @@ export class UsersService {
       console.error('An error occurred:', error.error.message);/////No network/Internet Error
     }
     else {
-      console.error(error.error); ///  Backend errors
+      console.error(error.error.message); ///  Backend errors
     }
     return throwError(error.error); //User might see this
   }
@@ -67,7 +69,6 @@ export class UsersService {
 
   // Register User
   register(user: NewUser): Observable<any> {
-    this.loadToken();
     return this.http
       .post<any>(this.domainKey + 'users/signup', JSON.stringify(user), this.httpOptions)
       .pipe(
@@ -86,10 +87,76 @@ export class UsersService {
       );
   }
 
+  // Sign out User
+  signout() {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'users/signout','', this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+
+  // Check token validity
+  checkToken() {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'users/token','', this.httpOptions2)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
   // Forgot password
   forgotpassword(user: User) {
     return this.http
       .post<response>(this.domainKey + 'users/reset', JSON.stringify(user), this.httpOptions)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+
+  // Update user details
+  updateUser(user: UpdateUser) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'users/', JSON.stringify(user), this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+
+  // Update user logo
+  updatePicture(data) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'users/logo', data, this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+
+  // Remove user logo
+  removePicture() {
+    this.loadToken();
+    return this.http
+      .delete<response>(this.domainKey + 'users/logo', this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+
+  // Update user details
+  updatePassword(data: UpdatePassword) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'users/password/', JSON.stringify(data), this.httpOptions2)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -141,10 +208,30 @@ export class UsersService {
       );
   }
   // Edit job
-  editJob(data:any) {
+  editJob(data:NewJob) {
     this.loadToken();
     return this.http
       .put<response>(this.domainKey + 'jobs', data, this.httpOptions2)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+  // Edit job
+  editJobStatus(data:any) {
+    this.loadToken();
+    return this.http
+      .put<response>(this.domainKey + 'jobs/status', data, this.httpOptions2)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+  // Delete job
+  deleteJob(id:any) {
+    this.loadToken();
+    return this.http
+      .delete<response>(this.domainKey + 'jobs/'+id, this.httpOptions2)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -155,6 +242,26 @@ export class UsersService {
     this.loadToken();
     return this.http
       .get<response>(this.domainKey + 'job/'+id, this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+  // Create new quotation
+  createNewQuotation(data:Quotation) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'quotation/new', data, this.httpOptions2)
+      .pipe(
+        retry(0),
+        catchError(this.handleError)
+      );
+  }
+  // Create new quotation
+  editQuotation(data:Quotation) {
+    this.loadToken();
+    return this.http
+      .post<response>(this.domainKey + 'quotation/', data, this.httpOptions2)
       .pipe(
         retry(0),
         catchError(this.handleError)

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from "@angular/router";
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
@@ -20,7 +18,6 @@ export class SignupPage implements OnInit {
   imageURL: any ;
   constructor(
     private router: Router,
-    private imagePicker: ImagePicker,
     private usersService: UsersService,
     private globalService: GlobalService,
     private nativeStorage: NativeStorage
@@ -51,17 +48,6 @@ export class SignupPage implements OnInit {
   }
 
 
-  selectPicture() {
-    let options = {
-      maximumImagesCount: 1,
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      this.pictureURL = results[0];
-    }, (err) => {
-      alert(err);
-    });
-  }
-
   uploadFile() {
     this.fileButton.nativeElement.click();
   }
@@ -79,11 +65,9 @@ export class SignupPage implements OnInit {
   signup() {
     this.globalService.showLoader('Creating your account...');
     if (
-      [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.pictureUrl, this.userAccount.password1, this.userAccount.password2].includes("") ||
-      [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.pictureUrl, this.userAccount.password1, this.userAccount.password2].includes(null)
+      [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.password1, this.userAccount.password2].includes("") ||
+      [this.userAccount.name, this.userAccount.email, this.userAccount.phoneNumber, this.userAccount.companyName, this.userAccount.companyAddress, this.userAccount.currency, this.userAccount.password1, this.userAccount.password2].includes(null)
     ) {
-
-      console.log(this.pictureURL);
       let message = "Please fill all fields and try again.",
         duration = 3000,
         type = 'error';
@@ -133,5 +117,4 @@ export class SignupPage implements OnInit {
           })
     }
   }
-
 }

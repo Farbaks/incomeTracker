@@ -42,7 +42,7 @@ export class JobsPage implements OnInit {
       presentingElement: this.routerOutlet.nativeEl
     });
     modal.onDidDismiss().then(response => {
-      console.log(response.data);
+      this.getjobs(this.offset, this.limit);
     })
     return await modal.present();
   }
@@ -86,7 +86,7 @@ export class JobsPage implements OnInit {
         this.loading = false;
       },
       (error) => {
-
+        this.loading = false;
       }
     );
   }

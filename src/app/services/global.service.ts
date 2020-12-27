@@ -88,7 +88,7 @@ export class GlobalService {
   }
 
   changeDate(date) {
-    var from = date.split("/")
+    var from = date.split("T");
     var f = new Date(from[2], from[1] - 1, from[0]);
     return f;
   }

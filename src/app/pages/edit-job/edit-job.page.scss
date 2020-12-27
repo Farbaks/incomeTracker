@@ -73,6 +73,14 @@ ion-toolbar {
             margin-bottom: 5px;
         }
 
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: solid 1px rgb(230, 230, 230);
+            font-size: .85em;
+        }
+
         select {
             width: 100%;
             background-color: transparent;
@@ -80,6 +88,7 @@ ion-toolbar {
             padding: 15px;
             border-radius: 10px;
             border: solid 1px rgb(230, 230, 230);
+            font-size: .85em;
         }
 
         textarea {
@@ -87,6 +96,14 @@ ion-toolbar {
             padding: 15px;
             border-radius: 10px;
             border: solid 1px rgb(230, 230, 230);
+            font-size: .85em;
+        }
+
+        .delete {
+            color: red;
+            margin: 15px 0px;
+            padding: 10px 0px;
+            font-size: .85em;
         }
     }
 }

@@ -2,22 +2,49 @@
   <ion-toolbar class="toolbar1" id="header">
     <div class="buttons">
       <button class="cancel" (click)="this.closeModal()">Cancel</button>
-      <button class="create" (click)="this.changeStatus()">Update Job</button>
+      <button class="create" (click)="this.type == 'status' ? this.changeStatus():this.editJob()">{{ this.type == 'status' ? 'Update Status' : 'Update Job'}}</button>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="container">
-    <div class="input-div fullwidth">
+    <div class="input-div fullwidth" *ngIf="this.type=='status'">
       <p>Status:</p>
-      <select [(ngModel)] = "this.status">
+      <select [(ngModel)]="this.data.status">
         <option>Pending Quotation Approval</option>
         <option>Pending Job Completion</option>
         <option>Pending Payment</option>
         <option>Completed</option>
         <option>Cancelled</option>
       </select>
+    </div>
+    <div class="input-div fullwidth" *ngIf="this.type=='job'">
+      <div class="input-div">
+        <p>Job Name:</p>
+        <input type="text" [(ngModel)]="this.data.jobName" />
+      </div>
+      <div class="input-div">
+        <p>Company Name:</p>
+        <input type="text" [(ngModel)]="this.data.companyName" />
+      </div>
+      <div class="input-div">
+        <p>Company Address:</p>
+        <input type="text" [(ngModel)]="this.data.companyAddress" />
+      </div>
+      <div class="input-div">
+        <p>Contact Name:</p>
+        <input type="text" [(ngModel)]="this.data.contactName" />
+      </div>
+      <div class="input-div">
+        <p>Contact Phone Number:</p>
+        <input type="text" [(ngModel)]="this.data.contactNumber" />
+      </div>
+      <div class="input-div">
+        <p>Note/Comment:</p>
+        <textarea rows="7" [(ngModel)]="this.data.comment"></textarea>
+      </div>
+      <p class="delete" (click)="this.deleteJobConfirm()">Delete Job</p>
     </div>
   </div>
 </ion-content>

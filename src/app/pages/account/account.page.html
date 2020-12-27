@@ -10,10 +10,10 @@
   <div class="container">
     <div class="user-top">
       <div class="image-container">
-        <img src="../../../assets/food/shawarma1.jpg" />
+        <img src="{{pictureUrl}}" />
       </div>
       <div class="user-names">
-        <p class="name">Farouk Bakre</p>
+        <p class="name">{{this.userAccount.name}}</p>
       </div>
     </div>
     <div class="containers">
@@ -25,7 +25,7 @@
         <p class="container-heading">Settings & Privacy</p>
         <ion-icon name="chevron-forward"></ion-icon>
       </div>
-      <div class="container-link2" [routerLink] = '["/signin"]'>
+      <div class="container-link2" (click)="this.logout()">
         <p class="container-heading">Log out</p>
       </div>
     </div>

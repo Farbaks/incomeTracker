@@ -16,53 +16,43 @@
         <ion-icon name="people-circle-outline"></ion-icon>
       </div>
       <div class="user-names">
-        <p class="name">{{this.jobItem.companyName}}</p>
+        <p class="name">{{this.jobItem.jobName}}</p>
         <p class="date">{{this.globalService.formatDate(this.jobItem.created_at)}}</p>
       </div>
       <div class="action-buttons" *ngIf="this.jobItem.quotation == 'Quotation has not been created'">
-        <div class="action-button" [routerLink]='["quote"]'>
+        <div class="action-button" (click)="this.editJob()">
+          <ion-icon name="Create"></ion-icon>
+          <p>Edit job details</p>
+        </div>
+        <div class="action-button" [routerLink]='["quote/new"]'>
           <ion-icon name="Create"></ion-icon>
           <p>Create quotation</p>
         </div>
       </div>
-      <!-- <div class="action-buttons">
-        <div class="action-button">
-          <ion-icon name="add-circle"></ion-icon>
+      <div class="action-buttons" *ngIf="this.jobItem.quotation != 'Quotation has not been created'">
+        <div class="action-button" (click)="this.editJob()">
+          <ion-icon name="Create"></ion-icon>
+          <p>Edit job details</p>
+        </div>
+        <div class="action-button" [routerLink]='["quote/edit"]'>
+          <ion-icon name="Create"></ion-icon>
           <p>Edit quotation</p>
         </div>
-        <div class="action-button">
-          <ion-icon name="create"></ion-icon>
-          <p>View quotation</p>
-        </div>
-        <div class="action-button">
-          <ion-icon name="create-outline"></ion-icon>
-          <p>Share Quotation</p>
-        </div>
-      </div> -->
-      <!-- <div class="action-buttons">
-        <div class="action-button">
-          <ion-icon name="add-circle"></ion-icon>
-          <p>View quotation</p>
-        </div>
-        <div class="action-button">
-          <ion-icon name="create"></ion-icon>
-          <p>Share quotation</p>
-        </div>
-        <div class="action-button">
-          <ion-icon name="create-outline"></ion-icon>
-          <p>View Invoice</p>
-        </div>
-        <div class="action-button">
-          <ion-icon name="create-outline"></ion-icon>
-          <p>Share Invoice</p>
-        </div>
-      </div> -->
+      </div>
     </div>
     <div class="job-con" *ngIf="this.jobItem != {}">
       <div class="job-sec">
+        <p class="heading1">Company Name</p>
+        <p class="heading2">{{this.jobItem.companyName}}</p>
+      </div>
+      <div class="job-sec">
+        <p class="heading1">Company Address</p>
+        <p class="heading2">{{this.jobItem.companyAddress}}</p>
+      </div>
+      <div class="job-sec">
         <p class="heading1">Cost of Job</p>
-        <p *ngIf="this.jobItem.quotation != 'Quotation has not been created'" class="heading1">
-          {{this.globalService.nairaFormat(this.jobItem.quotation.currency, this.jobItem.quotation.totalJobCost)}}
+        <p *ngIf="this.jobItem.quotation != 'Quotation has not been created'" class="heading2">
+          {{this.globalService.nairaFormat(this.jobItem.quotation.quotationDetails.currency, this.jobItem.quotation.quotationDetails.totalJobCost)}}
         </p>
         <i *ngIf="this.jobItem.quotation == 'Quotation has not been created'" class="heading1">
           Quotation has not been created yet.
@@ -70,8 +60,8 @@
       </div>
       <div class="job-sec">
         <p class="heading1">Profit</p>
-        <p *ngIf="this.jobItem.quotation != 'Quotation has not been created'" class="heading1">
-          {{this.globalService.nairaFormat(this.jobItem.quotation.currency, this.jobItem.quotation.profit)}}
+        <p *ngIf="this.jobItem.quotation != 'Quotation has not been created'" class="heading2">
+          {{this.globalService.nairaFormat(this.jobItem.quotation.quotationDetails.currency, this.jobItem.quotation.quotationDetails.profit)}}
         </p>
         <i *ngIf="this.jobItem.quotation == 'Quotation has not been created'" class="heading1">
           Quotation has not been created yet.
