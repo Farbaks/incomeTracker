@@ -48,6 +48,7 @@ export class NewJob {
     contactName: string = "";
     contactNumber: string = "";
     comment: string = "";
+    status?:string;
 }
 
 export class Quotation {

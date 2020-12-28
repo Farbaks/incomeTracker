@@ -20,17 +20,19 @@ export class InputQuotationPage implements OnInit {
   quote: Quotation;
   Items: Item[];
   Payments: Payment[];
+  currency:string;
   constructor(
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
     this.jobId = parseInt(this.route.snapshot.paramMap.get("id"));
     this.quote = new Quotation(this.jobId);
     this.type = this.route.snapshot.paramMap.get("type");
+    this.currency = JSON.parse(localStorage.getItem('jobs')).filter(n => n.id == this.jobId)[0].currency;
     if (this.type == 'edit') {
       let jobs = JSON.parse(localStorage.getItem('jobs'));
       this.quote = jobs.filter(n => n.id == this.jobId)[0].quotation.quotationDetails;

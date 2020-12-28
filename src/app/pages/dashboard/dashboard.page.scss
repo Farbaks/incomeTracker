@@ -6,18 +6,26 @@ ion-toolbar {
     padding: 5px 16px 5px 16px !important;
     display: flex !important;
     justify-content: flex-start !important;
+    
     // transition: all ease 0.4s;
 }
 .toolbar1 {
+    width: 100%;
     display: flex !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
+    align-items: center !important;
 }
 .profile-heading {
+    display: flex;
+    flex-grow: 1;
     font-size: 1.2em;
     font-weight: 600;
     word-spacing: 1.5px;
     margin: 0px;
     color: var(--ion-color-textcolor3);
+    p {
+        margin: 0;
+    }
 }
 .profile-subheading {
     font-size: 0.8em;
@@ -32,7 +40,7 @@ ion-toolbar {
     height: 30px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;

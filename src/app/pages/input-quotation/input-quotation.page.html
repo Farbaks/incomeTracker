@@ -45,11 +45,11 @@
       <div class="item-item" *ngFor="let item of Items">
         <div class="item-sec">
           <p class="name">{{item.itemName}}</p>
-          <p class="price1">{{this.globalService.nairaFormat("₦", this.item.totalPrice) || this.item.totalPrice}}</p>
+          <p class="price1">{{this.globalService.nairaFormat(this.currency, this.item.totalPrice)}}</p>
         </div>
         <div class="item-sec">
           <p><span class="quantity"><span>{{this.item.quantity}}</span> X </span><span
-              class="price2">{{this.globalService.nairaFormat("₦", this.item.unitPrice) || this.item.unitPrice}}</span>
+              class="price2">{{this.globalService.nairaFormat(this.currency, this.item.unitPrice)}}</span>
           </p>
           <div class="icon">
             <ion-icon name="create-outline" (click)="this.openEditItemModal(item)"></ion-icon>
@@ -70,7 +70,7 @@
     <div class="summary">
       <div class="section">
         <p class="name">Subtotal:</p>
-        <p class="price1">{{this.globalService.nairaFormat("₦", this.quote.subTotalJobCost) || this.quote.subTotalJobCost}}</p>
+        <p class="price1">{{this.globalService.nairaFormat(this.currency, this.quote.subTotalJobCost)}}</p>
       </div>
     </div>
     <div class="add-buttons">
@@ -88,7 +88,7 @@
             <p class="price1">
               <span *ngIf="payment.paymentType=='discount'">- </span>
               <span *ngIf="payment.paymentType=='tax'">+ </span>
-              {{this.globalService.nairaFormat("₦", this.payment.amount) || this.payment.amount}}
+              {{this.globalService.nairaFormat(this.currency, this.payment.amount)}}
             </p>
           </div>
         </ion-item>
@@ -100,7 +100,7 @@
     <div class="summary">
       <div class="section">
         <p class="name">Total</p>
-        <p class="price1">{{this.globalService.nairaFormat("₦", this.quote.totalJobCost) || this.quote.totalJobCost}}</p>
+        <p class="price1">{{this.globalService.nairaFormat(this.currency, this.quote.totalJobCost)}}</p>
       </div>
     </div>
     <div class="add-buttons">

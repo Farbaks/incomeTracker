@@ -13,7 +13,7 @@ export class ForgotpasswordPage implements OnInit {
   userAccount: User;
   constructor(
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {
     this.userAccount = new User;
   }

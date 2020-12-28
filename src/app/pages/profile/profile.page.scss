@@ -26,6 +26,7 @@ ion-toolbar {
 
 .container {
     width: 100%;
+    min-height: 100%;
     box-sizing: border-box;
     background-color: var(--ion-color-secondarycolor2);
     display: flex;
@@ -70,10 +71,12 @@ ion-toolbar {
 
 .section {
     width: 100%;
+    min-height: 100%;
     // padding: 15px 16px;
     box-sizing: border-box;
     background-color: var(--ion-color-secondarycolor2);
     display: flex;
+    flex-grow: 1;
     flex-flow: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -123,7 +126,7 @@ ion-toolbar {
     .add-discount {
         margin: 0px;
         font-size: .8em;
-        padding: 10px 15px;
+        padding: 12px 15px;
         border-radius: 15px;
         background-color: var(--ion-color-primarycolor);
         color: white;
@@ -132,7 +135,7 @@ ion-toolbar {
     .add-tax {
         margin: 0px 10px 0px 0px;
         font-size: .8em;
-        padding: 10px 0px;
+        padding: 12px 0px;
         border-radius: 15px;
         color: var(--ion-color-primarycolor);
         background-color: white;
@@ -145,8 +148,8 @@ ion-toolbar {
         justify-content: center;
         margin: 0px;
         font-size: .8em;
-        padding: 10px 15px;
-        // border-radius: 15px;
+        padding: 12px 15px;
+        border-radius: 3px;
         background-color: var(--ion-color-primarycolor);
         color: white;
     }

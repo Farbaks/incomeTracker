@@ -81,6 +81,24 @@ ion-toolbar {
         flex-flow: column;
         align-items: center;
         margin-top: 10px;
+        .name1{
+            margin: 0px 0px 10px 0px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: rgb(80,80,80);
+        }
+        .name2{
+            margin: 0px 0px 10px 0px;
+            font-size: .75em;
+            font-weight: 500;
+            color: rgb(100,100,100);
+        }
+        .name3{
+            margin: 0px 0px 10px 0px;
+            font-size: .75em;
+            font-weight: 500;
+            color: rgb(100,100,100);
+        }
     }
     .name{
         margin: 0px;

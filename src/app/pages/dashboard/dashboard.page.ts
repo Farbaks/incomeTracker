@@ -23,7 +23,7 @@ export class DashboardPage implements OnInit {
   constructor(
     private router: Router,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private navController: NavController
   ) {
     this.position = window.pageYOffset;
@@ -147,7 +147,12 @@ export class DashboardPage implements OnInit {
             ticks: {
               beginAtZero: true,
               callback: function (value, index, values) {
-                return " ";
+                if (value > 999) {
+                  return value/1000 + "k";
+                }
+                else {
+                  return value;
+                }
               }
             },
             gridLines: {

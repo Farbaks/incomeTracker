@@ -21,7 +21,7 @@ export class JobDetailPage implements OnInit {
     private pdfGenerator: PDFGenerator,
     private route: ActivatedRoute,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     

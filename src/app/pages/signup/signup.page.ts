@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from "@angular/router";
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { NewUser } from 'src/app/classes/user';
@@ -19,8 +18,7 @@ export class SignupPage implements OnInit {
   constructor(
     private router: Router,
     private usersService: UsersService,
-    private globalService: GlobalService,
-    private nativeStorage: NativeStorage
+    public globalService: GlobalService,
   ) {
     localStorage.removeItem("token");
     this.userAccount = new NewUser;

@@ -16,7 +16,7 @@ export class NewJobPage implements OnInit {
     public modalController: ModalController,
     private router: Router,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {
     this.data = new NewJob;
   }

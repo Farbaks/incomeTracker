@@ -15,7 +15,7 @@ export class AccountPage implements OnInit {
   constructor(
     private router: Router,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {
     this.position = window.pageYOffset;
     this.userAccount = {};

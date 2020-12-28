@@ -14,7 +14,7 @@ export class PrivacyPage implements OnInit {
   data: UpdatePassword;
   constructor(
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {
     this.data = new UpdatePassword;
   }

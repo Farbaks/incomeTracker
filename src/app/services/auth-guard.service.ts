@@ -10,12 +10,13 @@ import { UsersService } from './users.service';
 export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router, private usersService: UsersService,
-    private globalService: GlobalService,) { }
+    public globalService: GlobalService,) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     // throw new Error('Method not implemented.');
 
     try {
       if(!localStorage.getItem('token')) {
+        this.router.navigate(['/signin'], { replaceUrl: true });
         return false;
       }
       this.usersService.checkToken().subscribe(

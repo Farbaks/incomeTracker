@@ -18,7 +18,7 @@ export class JobsPage implements OnInit {
   constructor(public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
   ) {
     this.position = window.pageYOffset;
     this.jobs = [];

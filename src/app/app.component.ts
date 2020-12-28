@@ -3,9 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { UsersService } from 'src/app/services/users.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +15,6 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private usersService: UsersService,
-    private nativeStorage: NativeStorage,
     private uniqueDeviceID: UniqueDeviceID,
   ) {
     this.initializeApp();

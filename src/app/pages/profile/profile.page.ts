@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   userAccount: UpdateUser;
   constructor(
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private router: Router,
     private camera: Camera
   ) {

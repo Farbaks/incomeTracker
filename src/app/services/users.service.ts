@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { NewUser, User, response, NewJob, Quotation, UpdateUser, UpdatePassword } from 'src/app/classes/user';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 
 @Injectable({
@@ -12,10 +10,10 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 })
 export class UsersService {
   // domainKey = 'https://income-live.herokuapp.com/api/';
-  domainKey = 'https://income-qa.herokuapp.com/api/';
-  // domainKey = 'http://127.0.0.1:8000/api/';
+  // domainKey = 'https://income-qa.herokuapp.com/api/';
+  domainKey = 'http://127.0.0.1:8000/api/';
   httpOptions2: { headers: HttpHeaders; responseType?: 'json'; };
-  constructor(private http: HttpClient, private nativeStorage: NativeStorage,private uniqueDeviceID: UniqueDeviceID,) {
+  constructor(private http: HttpClient) {
 
   }
   loadToken() {

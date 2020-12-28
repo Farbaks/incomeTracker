@@ -16,7 +16,7 @@ export class EditJobPage implements OnInit {
   data: NewJob;
   constructor(public modalController: ModalController,
     private usersService: UsersService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     public alertController: AlertController,
     private router: Router,
   ) { }
