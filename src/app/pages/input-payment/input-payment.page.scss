@@ -55,7 +55,7 @@ ion-toolbar {
     box-sizing: border-box;
     background-color: var(--ion-color-secondarycolor2);
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
     position: relative;
@@ -74,7 +74,7 @@ ion-toolbar {
             margin-bottom: 5px;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 15px;
             border-radius: 10px;
@@ -95,6 +95,9 @@ ion-toolbar {
 }
 .half-width {
     width: 49%;
+}
+.half-width:not(:last-child) {
+    margin-right: 2%;
 }
 .flex-row {
     display: flex;

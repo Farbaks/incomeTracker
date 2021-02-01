@@ -9,9 +9,10 @@ import { NewUser, User, response, NewJob, Quotation, UpdateUser, UpdatePassword 
   providedIn: 'root'
 })
 export class UsersService {
-  // domainKey = 'https://income-live.herokuapp.com/api/';
-  // domainKey = 'https://income-qa.herokuapp.com/api/';
-  domainKey = 'http://127.0.0.1:8000/api/';
+  // d = 'https://income-live.herokuapp.com/';
+  d = 'https://income-qa.herokuapp.com/';
+  // d = 'http://127.0.0.1:8000/';
+  domainKey = this.d + "api/";
   httpOptions2: { headers: HttpHeaders; responseType?: 'json'; };
   constructor(private http: HttpClient) {
 
@@ -121,7 +122,7 @@ export class UsersService {
   updateUser(user: UpdateUser) {
     this.loadToken();
     return this.http
-      .post<response>(this.domainKey + 'users/', JSON.stringify(user), this.httpOptions2)
+      .post<response>(this.domainKey + 'users', JSON.stringify(user), this.httpOptions2)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -154,7 +155,7 @@ export class UsersService {
   updatePassword(data: UpdatePassword) {
     this.loadToken();
     return this.http
-      .post<response>(this.domainKey + 'users/password/', JSON.stringify(data), this.httpOptions2)
+      .post<response>(this.domainKey + 'users/password', JSON.stringify(data), this.httpOptions2)
       .pipe(
         retry(0),
         catchError(this.handleError)
@@ -259,7 +260,7 @@ export class UsersService {
   editQuotation(data:Quotation) {
     this.loadToken();
     return this.http
-      .post<response>(this.domainKey + 'quotation/', data, this.httpOptions2)
+      .post<response>(this.domainKey + 'quotation', data, this.httpOptions2)
       .pipe(
         retry(0),
         catchError(this.handleError)

@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from "@angular/router";
 import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { NewUser } from 'src/app/classes/user';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 @Component({
   selector: 'app-signup',
@@ -19,19 +20,19 @@ export class SignupPage implements OnInit {
     private router: Router,
     private usersService: UsersService,
     public globalService: GlobalService,
+    private uniqueDeviceID: UniqueDeviceID,
   ) {
     localStorage.removeItem("token");
     this.userAccount = new NewUser;
-    this.userAccount.deviceId = localStorage.getItem('IMEI');
     this.getCurrency();
   }
 
   ngOnInit() {
   }
 
-  log() {
-    console.log(this.userAccount.currency);
-  }
+  // log() {
+  //   console.log(this.userAccount.currency);
+  // }
 
   getCurrency() {
     this.usersService.fetchCurrency()
@@ -80,12 +81,24 @@ export class SignupPage implements OnInit {
       this.globalService.showToast("Invalid Email", 2000, "error");
       this.globalService.dismissLoader();
     }
-    else if (!this.globalService.validatePhone(this.userAccount.phoneNumber)) {
-      this.globalService.showToast("Invalid Phone Number", 2000, "error");
-      this.globalService.dismissLoader();
-    }
+    // else if (!this.globalService.validatePhone(this.userAccount.phoneNumber)) {
+    //   this.globalService.showToast("Invalid Phone Number", 2000, "error");
+    //   this.globalService.dismissLoader();
+    // }
     else {
       this.userAccount.password = this.userAccount.password1;
+      try {
+        this.userAccount.deviceId = localStorage.getItem('IMEI');
+      }
+      catch (error) {
+        this.uniqueDeviceID.get()
+        .then((uuid: any) => {
+          this.userAccount.deviceId = uuid;
+        })
+        .catch((error: any) => {
+          this.userAccount.deviceId = '0000-0000-0000-0000'
+        });
+      }
       // Register user
       this.usersService.register(this.userAccount)
         .subscribe(

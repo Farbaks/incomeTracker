@@ -93,9 +93,15 @@ export class EditJobPage implements OnInit {
           (data) => {
             this.globalService.showToast(data.message, 2000, "success");
             this.globalService.dismissLoader();
-            setTimeout(() => {
-              this.closeModal();
-            }, 2000);
+            this.usersService.getUserJobs(0, 20).subscribe(
+              (jobData) => {
+                localStorage.setItem('jobs', JSON.stringify(jobData.data));
+                this.closeModal('Updated successfully');
+              },
+              (error) => {
+
+              }
+            );
           },
           (error) => {
             if (error.message == "Job does not exist") {

@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { User } from 'src/app/classes/user';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 @Component({
   selector: 'app-signin',
@@ -16,10 +17,10 @@ export class SigninPage implements OnInit {
     private router: Router,
     private usersService: UsersService,
     public globalService: GlobalService,
+    private uniqueDeviceID: UniqueDeviceID,
   ) {
     localStorage.removeItem("token");
-    this.userAccount = new User;
-    this.userAccount.deviceId = localStorage.getItem('IMEI');
+    this.userAccount = new User;    
   }
 
   ngOnInit() {
@@ -40,6 +41,18 @@ export class SigninPage implements OnInit {
       this.globalService.dismissLoader();
     }
     else {
+      try {
+        this.userAccount.deviceId = localStorage.getItem('IMEI');
+      }
+      catch (error) {
+        this.uniqueDeviceID.get()
+        .then((uuid: any) => {
+          this.userAccount.deviceId = uuid;
+        })
+        .catch((error: any) => {
+          this.userAccount.deviceId = '0000-0000-0000-0000'
+        });
+      }
       // Signin user
       this.usersService.signin(this.userAccount)
         .subscribe(

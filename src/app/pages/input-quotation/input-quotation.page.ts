@@ -20,7 +20,7 @@ export class InputQuotationPage implements OnInit {
   quote: Quotation;
   Items: Item[];
   Payments: Payment[];
-  currency:string;
+  currency: string;
   constructor(
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
@@ -33,6 +33,7 @@ export class InputQuotationPage implements OnInit {
     this.quote = new Quotation(this.jobId);
     this.type = this.route.snapshot.paramMap.get("type");
     this.currency = JSON.parse(localStorage.getItem('jobs')).filter(n => n.id == this.jobId)[0].currency;
+
     if (this.type == 'edit') {
       let jobs = JSON.parse(localStorage.getItem('jobs'));
       this.quote = jobs.filter(n => n.id == this.jobId)[0].quotation.quotationDetails;
@@ -41,12 +42,12 @@ export class InputQuotationPage implements OnInit {
       this.quote.payments.push(...jobs.filter(n => n.id == this.jobId)[0].quotation.discount.discountList)
     }
     let index = 1;
-    this.quote.items.forEach(item =>  {
+    this.quote.items.forEach(item => {
       item.SN = index;
       index += 1;
     });
     index = 1;
-    this.quote.payments.forEach(payment =>  {
+    this.quote.payments.forEach(payment => {
       payment.SN = index;
       index += 1;
     });
@@ -196,70 +197,75 @@ export class InputQuotationPage implements OnInit {
   }
 
   submit(type) {
+    this.quote.items = this.Items;
+    this.quote.payments = this.Payments;
     if ([this.quote.salesPerson, this.quote.paymentTerms].includes("") ||
       [this.quote.quotationValidity, this.quote.profit].includes(0) ||
       this.quote.items.length == 0
     ) {
       this.globalService.showToast(`Please fill in the required fields before submitting`, 2000, 'error', 'top');
     }
+    else if(this.quote.profit > this.quote.totalJobCost) {
+      this.globalService.showToast(`Your profit cannot be greater than the cost of the job`, 2000, 'error', 'top');
+    }
     else {
-      if(type == "new") {
+      if (type == "new") {
         this.globalService.showLoader("Creating Quotation...");
         this.usersService.createNewQuotation(this.quote)
-        .subscribe(
-          (data) => {
-            if (data.message == "Quotation has been created successfully") {
-              this.globalService.showToast(data.message, 2000, "success");
-              this.globalService.dismissLoader();
-              setTimeout(() => {
-                this.router.navigate(['/tabs/jobs/'+this.jobId]);
-              }, 2000);
-            }
-          },
-          (error) => {
-            if (error.message == "Job does not exist") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else if (error.message == "All fields are required") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else {
-              this.globalService.showToast("An error occured. Please try again later", 2000, "error");
-              this.globalService.dismissLoader();
-            }
-          })
+          .subscribe(
+            (data) => {
+              if (data.message == "Quotation has been created successfully") {
+                this.globalService.showToast(data.message, 2000, "success");
+                this.globalService.dismissLoader();
+                setTimeout(() => {
+                  this.router.navigate(['/tabs/jobs/' + this.jobId]);
+                }, 2000);
+              }
+            },
+            (error) => {
+              if (error.message == "Job does not exist") {
+                this.globalService.showToast(error.message, 2000, "error");
+                this.globalService.dismissLoader();
+              }
+              else if (error.message == "All fields are required") {
+                this.globalService.showToast(error.message, 2000, "error");
+                this.globalService.dismissLoader();
+              }
+              else {
+                this.globalService.showToast("An error occured. Please try again later", 2000, "error");
+                this.globalService.dismissLoader();
+              }
+            })
       }
       else {
         this.globalService.showLoader("Updating Quotation...");
         this.usersService.editQuotation(this.quote)
-        .subscribe(
-          (data) => {
-            if (data.message == "Quotation has been updated successfully") {
-              this.globalService.showToast(data.message, 2000, "success");
-              this.globalService.dismissLoader();
-              setTimeout(() => {
-                this.router.navigate(['/tabs/jobs/'+this.jobId]);
-              }, 2000);
-            }
-          },
-          (error) => {
-            if (error.message == "Job does not exist") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else if (error.message == "All fields are required") {
-              this.globalService.showToast(error.message, 2000, "error");
-              this.globalService.dismissLoader();
-            }
-            else {
-              this.globalService.showToast("An error occured. Please try again later", 2000, "error");
-              this.globalService.dismissLoader();
-            }
-          })
+          .subscribe(
+            (data) => {
+              if (data.message == "Quotation has been updated successfully") {
+                this.globalService.showToast(data.message, 2000, "success");
+                this.globalService.dismissLoader();
+                setTimeout(() => {
+                  this.router.navigate(['/tabs/jobs/' + this.jobId]);
+                }, 2000);
+              }
+            },
+            (error) => {
+              if (error.message == "Job does not exist") {
+                this.globalService.showToast(error.message, 2000, "error");
+                this.globalService.dismissLoader();
+              }
+              else if (error.message == "All fields are required") {
+                this.globalService.showToast(error.message, 2000, "error");
+                this.globalService.dismissLoader();
+              }
+              else {
+                this.globalService.showToast("An error occured. Please try again later", 2000, "error");
+                this.globalService.dismissLoader();
+              }
+            })
       }
-      
+
     }
   }
 

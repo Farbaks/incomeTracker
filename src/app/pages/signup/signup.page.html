@@ -50,7 +50,7 @@
         </div>
         <div class="input-div">
           <p>Currency:</p>
-          <select [(ngModel)]="this.userAccount.currency" (change)="log()">
+          <select [(ngModel)]="this.userAccount.currency">
             <option *ngFor="let currency of currencies"
               value="{{currency.currencies[0].symbol || currency.currencies[0].code}}">{{currency.name}} -
               {{currency.currencies[0].code}} ({{currency.currencies[0].symbol || currency.currencies[0].code}})

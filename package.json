@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@ionic-native/android-permissions": "^5.29.0",
+    "@ionic-native/browser-tab": "^5.30.0",
     "@ionic-native/camera": "^5.30.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/pdf-generator": "^5.20.0",
@@ -48,6 +49,8 @@
     "cordova-android": "^9.0.0",
     "cordova-pdf-generator": "^2.1.1",
     "cordova-plugin-android-permissions": "^1.1.0",
+    "cordova-plugin-browsertab": "^0.2.0",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
@@ -82,7 +85,8 @@
       "cordova-plugin-camera": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-uniquedeviceid": {}
+      "cordova-plugin-uniquedeviceid": {},
+      "cordova-plugin-browsertab": {}
     },
     "platforms": [
       "browser",

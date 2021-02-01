@@ -104,6 +104,7 @@ export class DashboardPage implements OnInit {
         this.usersService.getUserJobs(0, 5).subscribe(
           (jobData) => {
             this.jobs = jobData.data;
+            localStorage.setItem('jobs', JSON.stringify(jobData.data));
           },
           (error) => {
             if (error.message == "No token sent in request" || error.message == "Invalid token" || error.message == "Not authorized to carry out this action") {
@@ -147,12 +148,7 @@ export class DashboardPage implements OnInit {
             ticks: {
               beginAtZero: true,
               callback: function (value, index, values) {
-                if (value > 999) {
-                  return value/1000 + "k";
-                }
-                else {
-                  return value;
-                }
+                return " ";
               }
             },
             gridLines: {
